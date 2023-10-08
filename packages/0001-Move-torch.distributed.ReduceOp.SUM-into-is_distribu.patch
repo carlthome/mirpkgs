@@ -1,0 +1,27 @@
+From 70b4af64a2c85d556a46b601a1f3d8b81eb14e36 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Carl=20Thom=C3=A9?= <carlthome@gmail.com>
+Date: Wed, 3 May 2023 00:49:15 +0200
+Subject: [PATCH] Move torch.distributed.ReduceOp.SUM into is_distributed check
+
+---
+ encodec/distrib.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/encodec/distrib.py b/encodec/distrib.py
+index b1662d8..b8152a2 100644
+--- a/encodec/distrib.py
++++ b/encodec/distrib.py
+@@ -29,8 +29,10 @@ def is_distributed():
+     return world_size() > 1
+
+
+-def all_reduce(tensor: torch.Tensor, op=torch.distributed.ReduceOp.SUM):
++def all_reduce(tensor: torch.Tensor, op=None):
+     if is_distributed():
++        if op is None:
++            op = torch.distributed.ReduceOp.SUM
+         return torch.distributed.all_reduce(tensor, op)
+
+
+--
+2.39.2 (Apple Git-143)

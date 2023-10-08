@@ -1,0 +1,11 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    uses: carlthome/workflows/.github/workflows/nix.yaml@main
