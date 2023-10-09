@@ -3,7 +3,7 @@
 , fetchPypi
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "treetable";
   version = "0.2.5";
   format = "setuptools";
@@ -12,6 +12,10 @@ python3.pkgs.buildPythonApplication rec {
     inherit pname version;
     hash = "sha256-KclbeXqOz/S7iUy3sQPjmnjJBat4qIqaJH3jDId0Oi8=";
   };
+
+  nativeCheckInputs = with python3.pkgs; [
+    unittestCheckHook
+  ];
 
   pythonImportsCheck = [ "treetable" ];
 

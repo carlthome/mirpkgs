@@ -2,21 +2,28 @@
 , python3
 , fetchPypi
 , musdb
+, ffmpeg
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "museval";
   version = "0.4.1";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-JNIUDIWV/RcWdKWu1A+DfJiAoEQ9guGm26qZ8mv2CG4=";
   };
 
+  nativeBuildInputs = with python3.pkgs; [
+    setuptools
+    ffmpeg
+  ];
+
   propagatedBuildInputs = with python3.pkgs; [
     jsonschema
     musdb
+    ffmpeg
     numpy
     pandas
     scipy

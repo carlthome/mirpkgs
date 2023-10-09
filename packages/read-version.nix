@@ -3,7 +3,7 @@
 , fetchPypi
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "read-version";
   version = "0.3.2";
   format = "pyproject";

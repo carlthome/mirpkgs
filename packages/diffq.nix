@@ -3,7 +3,7 @@
 , fetchPypi
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "diffq";
   version = "0.2.4";
   format = "pyproject";

@@ -12,7 +12,7 @@
 , treetable
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "demucs";
   version = "4.0.1";
   format = "setuptools";
@@ -27,8 +27,8 @@ python3.pkgs.buildPythonApplication rec {
     dora-search
     einops
     flake8
-    hydra-colorlog
     hydra-core
+    hydra-colorlog
     julius
     lameenc
     museval

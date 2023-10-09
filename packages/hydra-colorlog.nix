@@ -4,7 +4,7 @@
 , read-version
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "hydra-colorlog";
   version = "1.2.0";
   format = "pyproject";
@@ -25,12 +25,12 @@ python3.pkgs.buildPythonApplication rec {
     hydra-core
   ];
 
-  pythonImportsCheck = [ "hydra_colorlog" ];
+  pythonImportsCheck = [ "hydra" ];
 
   meta = with lib; {
     description = "Enables colorlog for Hydra apps";
     homepage = "https://pypi.org/project/hydra-colorlog";
-    license = with licenses; [ ];
+    license = with licenses; [ mit ];
     maintainers = with maintainers; [ carlthome ];
   };
 }

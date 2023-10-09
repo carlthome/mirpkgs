@@ -1,40 +1,34 @@
-{ pkgs
-, stdenv
-, lib
+{ lib
+, python3
 , fetchPypi
-, fetchFromGitHub
-, python3Packages
 }:
-pkgs.python3Packages.buildPythonPackage {
-  name = "vmo";
-  format = "setuptools";
+
+python3.pkgs.buildPythonPackage rec {
+  pname = "vmo";
+  version = "0.30.5";
+  format = "pyproject";
 
   src = fetchPypi {
-    pname = "vmo";
-    version = "0.30.5";
+    inherit pname version;
     hash = "sha256-yXt+a7a3JM3aSy8usgCKzab4JK5lTQR1AiMEcFdjNdY=";
   };
 
-  propagatedBuildInputs = with python3Packages; [
-    numpy
-    scipy
-    librosa
+  nativeBuildInputs = [
+    python3.pkgs.setuptools
+    python3.pkgs.wheel
   ];
 
-  pythonImportsCheck = [
-    "vmo"
+  propagatedBuildInputs = [
+    python3.pkgs.numpy
+    python3.pkgs.scipy
   ];
 
-  nativeCheckInputs = with python3Packages; [
-    unittestCheckHook
-  ];
+  pythonImportsCheck = [ "vmo" ];
 
-  meta = {
-    description = "Python Modules of Variable Markov Oracle";
-    homepage = "https://github.com/wangsix/vmo";
-    license = lib.licenses.gpl3;
-    maintainers = [
-      (import ./maintainer.nix)
-    ];
+  meta = with lib; {
+    description = "Variable Markov Oracle in Python";
+    homepage = "https://pypi.org/project/vmo/";
+    license = licenses.gpl3Only;
+    maintainers = with maintainers; [ carlthome ];
   };
 }

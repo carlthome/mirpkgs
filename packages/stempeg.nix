@@ -4,7 +4,7 @@
 , ffmpeg
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "stempeg";
   version = "0.2.3";
   format = "setuptools";
@@ -20,6 +20,7 @@ python3.pkgs.buildPythonApplication rec {
 
   propagatedBuildInputs = with python3.pkgs; [
     ffmpeg-python
+    ffmpeg
     numpy
   ];
 

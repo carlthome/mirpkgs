@@ -2,9 +2,10 @@
 , python3
 , fetchPypi
 , treetable
+, submitit
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "dora-search";
   version = "0.1.12";
   format = "pyproject";
@@ -21,9 +22,10 @@ python3.pkgs.buildPythonApplication rec {
     retrying
     torch
     treetable
+    submitit
   ];
 
-  pythonImportsCheck = [ "dora_search" ];
+  pythonImportsCheck = [ "dora" ];
 
   meta = with lib; {
     description = "Easy grid searches for ML";

@@ -29,14 +29,10 @@ pkgs.python3Packages.buildPythonPackage rec {
     "pedalboard"
   ];
 
-  doCheck = false;
-
-  meta = {
+  meta = with lib; {
     description = "A Python library for adding effects to audio.";
     homepage = "https://github.com/spotify/pedalboard";
-    license = lib.licenses.gpl3;
-    maintainers = [
-      (import ./maintainer.nix)
-    ];
+    license = licenses.gpl3;
+    maintainers = with maintainers; [ carlthome ];
   };
 }

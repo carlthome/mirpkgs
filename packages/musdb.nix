@@ -5,17 +5,21 @@
 , ffmpeg
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "musdb";
   version = "0.4.0";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-bbTV5L8myZgqk4esYX+uf8gYLASF/Em0Q3JxI96L4FM=";
   };
 
-  nativeBuildInputs = [ ffmpeg python3.pkgs.pip ];
+  nativeBuildInputs = with python3.pkgs; [
+    setuptools
+    ffmpeg
+    pytest
+  ];
 
   propagatedBuildInputs = with python3.pkgs; [
     numpy

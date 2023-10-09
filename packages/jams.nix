@@ -1,40 +1,40 @@
-{ pkgs
-, stdenv
-, lib
+{ lib
+, python3
 , fetchPypi
-, fetchFromGitHub
-, python3Packages
 }:
-pkgs.python3Packages.buildPythonPackage {
-  name = "jams";
-  format = "setuptools";
+
+python3.pkgs.buildPythonPackage rec {
+  pname = "jams";
+  version = "0.3.4";
+  pyproject = true;
 
   src = fetchPypi {
-    pname = "jams";
-    version = "0.3.4";
+    inherit pname version;
     hash = "sha256-i7IVi9GbTwV7i5AyG0Sx3RZZxmy+vg1CGYidMdf4iLk=";
   };
 
-  propagatedBuildInputs = with python3Packages; [
+  nativeBuildInputs = with python3.pkgs; [
+    setuptools
+  ];
+
+  propagatedBuildInputs = with python3.pkgs; [
     pandas
     jsonschema
-    decorator
     sortedcontainers
+    decorator
     mir_eval
   ];
 
-  pythonImportsCheck = [
-    "jams"
+  checkInputs = with python3.pkgs; [
+    pytest-cov
   ];
 
-  doCheck = false;
+  pythonImportsCheck = [ "jams" ];
 
-  meta = {
+  meta = with lib; {
     description = "A JSON Annotated Music Specification for Reproducible MIR Research";
-    homepage = "https://github.com/marl/jams";
-    license = lib.licenses.isc;
-    maintainers = [
-      (import ./maintainer.nix)
-    ];
+    homepage = "https://pypi.org/project/jams/";
+    license = licenses.isc;
+    maintainers = with maintainers; [ carlthome ];
   };
 }

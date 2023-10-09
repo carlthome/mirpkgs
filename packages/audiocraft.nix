@@ -4,7 +4,7 @@
 , demucs
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "audiocraft";
   version = "1.0.0";
   format = "setuptools";

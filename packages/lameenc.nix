@@ -1,9 +1,10 @@
 { lib
 , python3
 , fetchFromGitHub
+, lame
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "lameenc";
   version = "1.6.1";
   format = "setuptools";
@@ -16,6 +17,12 @@ python3.pkgs.buildPythonApplication rec {
   };
 
   pythonImportsCheck = [ "lameenc" ];
+
+  buildPhase = ''
+    ${python3}/bin/python3 setup.py build --libdir=${lame.lib}/lib --incdir=${lame}/include/lame
+  '';
+
+  propagatedBuildInputs = [ lame ];
 
   meta = with lib; {
     description = "Python bindings around the LAME encoder";
