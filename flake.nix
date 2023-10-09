@@ -10,12 +10,8 @@
     in
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
-      packages = forAllSystems (system: import ./packages (inputs // { inherit system; }));
+      packages = forAllSystems (system: import ./default.nix (inputs // { inherit system; }));
       devShells = forAllSystems (system: { default = import ./shell.nix { pkgs = nixpkgs.legacyPackages.${system}; }; });
-      overlays.default = final: prev: rec {
-        jams = final.callPackage ./packages/jams.nix { };
-        vmo = final.callPackage ./packages/vmo.nix { };
-        msaf = final.callPackage ./packages/msaf.nix { inherit jams; inherit vmo; };
-      };
+      overlays.default = import ./overlay.nix;
     };
 }
