@@ -1,5 +1,6 @@
 { lib
 , python3
+, fetchgit
 , fetchFromGitHub
 , juce
 , stdenv
@@ -30,11 +31,10 @@ python3.pkgs.buildPythonPackage rec {
     "-I${juce6}/share/juce/modules/juce_audio_processors/format_types/VST3_SDK"
   ];
 
-  src = fetchFromGitHub {
-    owner = "spotify";
-    repo = "pedalboard";
+  src = fetchgit {
+    url = "https://github.com/spotify/pedalboard.git";
     rev = "v${version}";
-    hash = "sha256-o5kqacMYT/+oQMjxkNrfTjuGKxAZ1VFmfmk4pw71KjA=";
+    hash = "sha256-kp2PJ3dadfbsxtAogYnwc0dzfEbmET/tIUP0M9B0Udg=";
     fetchSubmodules = true;
   };
 
