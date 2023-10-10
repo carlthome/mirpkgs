@@ -1,7 +1,7 @@
-{ nixpkgs, system, self, ... }@inputs:
+{ nixpkgs, system, ... }:
 let
   pkgs = nixpkgs.legacyPackages.${system};
-  packages = import ./overlay.nix pkgs self;
+  packages = import ./pkgs/development/python-modules { inherit pkgs; };
   allPackages = packages: pkgs.symlinkJoin { name = "all"; paths = (builtins.attrValues packages); };
 in
 packages // { default = allPackages packages; }

@@ -2,6 +2,8 @@
 , python3
 , fetchFromGitHub
 , lame
+, cmake
+, clang
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -16,18 +18,30 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-+EnJ4v6Ol5tnFKpFCx8w1Bhu5NsaIK1OX/sjEhnMHL8=";
   };
 
-  pythonImportsCheck = [ "lameenc" ];
-
-  buildPhase = ''
-    ${python3}/bin/python3 setup.py build --libdir=${lame.lib}/lib --incdir=${lame}/include/lame
-  '';
+  nativeBuildInputs = with python3.pkgs; [
+    setuptools
+    wheel
+    cmake
+    clang
+  ];
 
   propagatedBuildInputs = [ lame ];
+
+  configurePhase = ''
+    cmake -S $src -B $out
+  '';
+
+  buildPhase = ''
+    cd $out
+    make
+  '';
+
+  pythonImportsCheck = [ "lameenc" ];
 
   meta = with lib; {
     description = "Python bindings around the LAME encoder";
     homepage = "https://github.com/chrisstaite/lameenc";
-    license = with licenses; [ ];
+    license = with licenses; [ lgpl3 ];
     maintainers = with maintainers; [ carlthome ];
   };
 }

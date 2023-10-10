@@ -12,6 +12,6 @@
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
       packages = forAllSystems (system: import ./default.nix (inputs // { inherit system; }));
       devShells = forAllSystems (system: { default = import ./shell.nix { pkgs = nixpkgs.legacyPackages.${system}; }; });
-      overlays.default = import ./overlay.nix;
+      overlays.default = final: prev: (import ./pkgs/development/python-modules { pkgs = final; });
     };
 }
