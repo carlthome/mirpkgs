@@ -7,17 +7,17 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "hydra-colorlog";
   version = "1.2.0";
-  format = "pyproject";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-1E+FAI+r0kSMfjtJbDG0TXYQVg9v/3TzZzr6qUmHCJk=";
   };
 
-  nativeBuildInputs = [
+  nativeBuildInputs = with python3.pkgs; [
     read-version
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+    setuptools
+    wheel
   ];
 
   propagatedBuildInputs = with python3.pkgs; [

@@ -6,12 +6,17 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "treetable";
   version = "0.2.5";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-KclbeXqOz/S7iUy3sQPjmnjJBat4qIqaJH3jDId0Oi8=";
   };
+
+  nativeBuildInputs = with python3.pkgs; [
+    setuptools
+    wheel
+  ];
 
   nativeCheckInputs = with python3.pkgs; [
     unittestCheckHook

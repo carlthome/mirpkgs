@@ -15,6 +15,7 @@ python3.pkgs.buildPythonPackage rec {
 
   nativeBuildInputs = with python3.pkgs; [
     setuptools
+    wheel
   ];
 
   propagatedBuildInputs = with python3.pkgs; [

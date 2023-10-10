@@ -8,7 +8,7 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "dora-search";
   version = "0.1.12";
-  format = "pyproject";
+  pyproject = true;
 
   src = fetchPypi {
     pname = "dora_search";

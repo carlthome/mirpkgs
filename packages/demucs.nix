@@ -15,7 +15,7 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "demucs";
   version = "4.0.1";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;

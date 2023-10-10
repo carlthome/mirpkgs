@@ -6,7 +6,7 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "read-version";
   version = "0.3.2";
-  format = "pyproject";
+  pyproject = true;
 
   src = fetchPypi {
     pname = "read_version";
@@ -14,13 +14,9 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-Py0whSvOkXSyRPfymq6/TnmQTG7VGhlxYyUBX/MGzj8=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
-  ];
-
-  propagatedBuildInputs = with python3.pkgs; [
+  nativeBuildInputs = with python3.pkgs; [
     setuptools
+    wheel
   ];
 
   passthru.optional-dependencies = with python3.pkgs; {

@@ -17,6 +17,7 @@ python3.pkgs.buildPythonPackage rec {
 
   nativeBuildInputs = with python3.pkgs; [
     setuptools
+    wheel
     ffmpeg
     pytest
   ];

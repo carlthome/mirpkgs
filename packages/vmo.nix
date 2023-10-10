@@ -6,21 +6,21 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "vmo";
   version = "0.30.5";
-  format = "pyproject";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-yXt+a7a3JM3aSy8usgCKzab4JK5lTQR1AiMEcFdjNdY=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  nativeBuildInputs = with python3.pkgs; [
+    setuptools
+    wheel
   ];
 
-  propagatedBuildInputs = [
-    python3.pkgs.numpy
-    python3.pkgs.scipy
+  propagatedBuildInputs = with python3.pkgs; [
+    numpy
+    scipy
   ];
 
   pythonImportsCheck = [ "vmo" ];

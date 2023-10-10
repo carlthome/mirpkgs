@@ -6,7 +6,7 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "openunmix";
   version = "1.2.1";
-  format = "pyproject";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;

@@ -6,7 +6,7 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "submitit";
   version = "1.5.0";
-  format = "pyproject";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;

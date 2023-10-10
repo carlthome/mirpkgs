@@ -7,14 +7,16 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "stempeg";
   version = "0.2.3";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
     hash = "sha256-hAu4JFBNcTM22mqJ1ieQ97oXKgmdyW+KK7XTIUjRqWo=";
   };
 
-  nativeBuildInputs = [
+  nativeBuildInputs = with python3.pkgs; [
+    setuptools
+    wheel
     ffmpeg
   ];
 

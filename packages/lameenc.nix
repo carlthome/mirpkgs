@@ -7,7 +7,7 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "lameenc";
   version = "1.6.1";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "chrisstaite";
