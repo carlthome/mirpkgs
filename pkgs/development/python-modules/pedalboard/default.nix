@@ -6,6 +6,7 @@
 , stdenv
 , libcxx
 , darwin
+, pcre
 }:
 
 let
@@ -43,10 +44,15 @@ python3.pkgs.buildPythonPackage rec {
     wheel
     pybind11
     juce6
+    pcre
   ];
 
   propagatedBuildInputs = with python3.pkgs; [
     numpy
+    setuptools
+    wheel
+    pybind11
+    juce6
   ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
     Accelerate
     AudioToolbox
