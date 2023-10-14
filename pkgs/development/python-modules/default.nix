@@ -3,8 +3,7 @@
   encodec = pkgs.callPackage ./encodec { };
   jams = pkgs.callPackage ./jams { };
   julius = pkgs.callPackage ./julius { };
-  # TODO
-  #lameenc = pkgs.callPackage ./lameenc{ };
+  lameenc = pkgs.callPackage ./lameenc { };
   stempeg = pkgs.callPackage ./stempeg { };
   openunmix = pkgs.callPackage ./openunmix { };
   # TODO
