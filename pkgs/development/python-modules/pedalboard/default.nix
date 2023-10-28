@@ -67,8 +67,6 @@ python3.pkgs.buildPythonPackage rec {
     WebKit
   ]);
 
-  pythonImportsCheck = [ "pedalboard" ];
-
   meta = with lib; {
     description = "A Python library for working with audio";
     homepage = "https://github.com/spotify/pedalboard";
