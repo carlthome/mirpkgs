@@ -12,12 +12,10 @@
   treetable = pkgs.callPackage ./treetable { };
   vmo = pkgs.callPackage ./vmo { };
   hydra-colorlog = pkgs.callPackage ./hydra-colorlog { inherit read-version; };
-  msaf = pkgs.callPackage ./msaf { inherit jams; inherit vmo; };
-  dora-search = pkgs.callPackage ./dora-search { inherit treetable; inherit submitit; };
+  msaf = pkgs.callPackage ./msaf { inherit jams vmo; };
+  dora-search = pkgs.callPackage ./dora-search { inherit treetable submitit; };
   musdb = pkgs.callPackage ./musdb { inherit stempeg; };
   museval = pkgs.callPackage ./museval { inherit musdb; };
-  # TODO
-  #demucs = pkgs.callPackage ./demucs{ inherit diffq; inherit dora-search; inherit julius; inherit hydra-colorlog; inherit lameenc; inherit museval; inherit openunmix; inherit submitit; inherit treetable; };
-  # TODO
-  #audiocraft = pkgs.callPackage ./audiocraft{ inherit demucs; };
+  demucs = pkgs.callPackage ./demucs { inherit diffq dora-search julius hydra-colorlog lameenc museval openunmix submitit treetable; };
+  audiocraft = pkgs.callPackage ./audiocraft { inherit demucs; };
 }
