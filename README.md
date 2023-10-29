@@ -13,8 +13,11 @@ nix flake show github:carlthome/mirpkgs
 # Build all packages.
 nix build github:carlthome/mirpkgs
 
-# TODO Show how to start a Python REPL with packages, or how to create a shell.nix with `python3.withPackages`.
-# nix run github:carlthome/mirpkgs -- python -c ""
+# Start an interactive Python session with all packages available.
+nix run github:carlthome/mirpkgs
+
+# Or run a Python script on-the-fly that prints all available packages from within the session.
+nix run github:carlthome/mirpkgs -- python -c 'help("modules")'
 ```
 
 ## Develop
