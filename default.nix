@@ -1,7 +1,10 @@
 { nixpkgs, system, ... }:
 let
   pkgs = nixpkgs.legacyPackages.${system};
-  packages = import ./pkgs/development/python-modules { inherit pkgs; };
-  allPackages = packages: pkgs.symlinkJoin { name = "all"; paths = (builtins.attrValues packages); };
+  pythonPackages = import ./pkgs/development/python-modules { inherit pkgs; };
+  shell = pkgs.buildEnv {
+    name = "ipython";
+    paths = [ (pkgs.python3.withPackages (ps: [ ps.ipython ] ++ builtins.attrValues pythonPackages)) ];
+  };
 in
-packages // { default = allPackages packages; }
+pythonPackages // { default = shell; }
