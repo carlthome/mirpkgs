@@ -36,6 +36,7 @@ python3.pkgs.buildPythonPackage rec {
     scipy
     tqdm
     dali-dataset
+    smart-open
   ];
 
   passthru.optional-dependencies = with python3.pkgs; {
@@ -80,6 +81,7 @@ python3.pkgs.buildPythonPackage rec {
       pytest-cov
       pytest-localserver
       pytest-mock
+      pytest-xdist
       #pytest-pep8
       smart-open
       testcontainers
@@ -88,19 +90,13 @@ python3.pkgs.buildPythonPackage rec {
     ];
   };
 
-  checkInputs = with python3.pkgs; [
-    pytestCheckHook
-  ] ++ lib.flatten (builtins.attrValues passthru.optional-dependencies);
-
-  pytestFlagsArray = [
-    "tests/"
-  ];
+  checkInputs = lib.flatten (builtins.attrValues passthru.optional-dependencies);
 
   checkPhase = ''
     runHook preCheck
     export DEFAULT_DATA_HOME=$TEMP
     export NUMBA_CACHE_DIR=$TEMP
-    ${python3.pkgs.pytest}/bin/pytest tests/
+    ${python3.pkgs.pytest}/bin/pytest -n auto tests/
     runHook postCheck
   '';
 
