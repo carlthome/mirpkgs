@@ -3,7 +3,7 @@
 , fetchPypi
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "dali-dataset";
   version = "1.1";
   format = "setuptools";

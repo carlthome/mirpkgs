@@ -4,7 +4,7 @@
 , mido
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "pretty-midi";
   version = "0.2.10";
   format = "setuptools";

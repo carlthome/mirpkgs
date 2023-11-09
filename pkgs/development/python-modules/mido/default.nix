@@ -3,7 +3,7 @@
 , fetchPypi
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "mido";
   version = "1.3.0";
   format = "pyproject";

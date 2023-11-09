@@ -7,7 +7,7 @@
 , dali-dataset
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "mirdata";
   version = "0.3.8";
   format = "setuptools";
