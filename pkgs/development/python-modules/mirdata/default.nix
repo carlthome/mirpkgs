@@ -1,6 +1,6 @@
 { lib
 , python3
-, fetchPypi
+, fetchFromGitHub
 , jams
 , pretty-midi
 , music21
@@ -12,9 +12,12 @@ python3.pkgs.buildPythonApplication rec {
   version = "0.3.8";
   format = "setuptools";
 
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-ueIX4QfyfRYv/Nhm6G8GIUf69KqCYEN7PrF3CAXMbD4=";
+  # The tests require data files that are not included in the source release, so we take the source from GitHub instead.
+  src = fetchFromGitHub {
+    owner = "mir-dataset-loaders";
+    repo = pname;
+    rev = version;
+    hash = "sha256-Ar0FsMb5S9lvzBLUHf13d8SXWPSSkQRxnUnSzPiu/MU=";
   };
 
   propagatedBuildInputs = with python3.pkgs; [
@@ -54,10 +57,11 @@ python3.pkgs.buildPythonApplication rec {
       sphinx
       sphinx-rtd-theme
       sphinx-togglebutton
-      sphinxcontrib-napoleon
+      #sphinxcontrib-napoleon
     ];
     gcs = [
       smart-open
+      google-cloud-storage
     ];
     haydn_op20 = [
       music21
@@ -76,24 +80,29 @@ python3.pkgs.buildPythonApplication rec {
       pytest-cov
       pytest-localserver
       pytest-mock
-      pytest-pep8
+      #pytest-pep8
       smart-open
       testcontainers
-      types-chardet
+      #types-chardet
       types-pyyaml
     ];
   };
 
-  nativeCheckInputs = with python3.pkgs; [
+  checkInputs = with python3.pkgs; [
     pytestCheckHook
+  ] ++ lib.flatten (builtins.attrValues passthru.optional-dependencies);
+
+  pytestFlagsArray = [
+    "tests/"
   ];
 
-  checkInputs = with python3.pkgs; [
-    openpyxl
-    smart-open
-    dali-dataset
-    music21
-  ];
+  checkPhase = ''
+    runHook preCheck
+    export DEFAULT_DATA_HOME=$TEMP
+    export NUMBA_CACHE_DIR=$TEMP
+    ${python3.pkgs.pytest}/bin/pytest tests/
+    runHook postCheck
+  '';
 
   pythonImportsCheck = [ "mirdata" ];
 
