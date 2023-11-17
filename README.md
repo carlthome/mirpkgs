@@ -46,7 +46,7 @@ nix build
 
 ### Why does this repo exist?
 
-The goal is to have these packages live within nixpkgs, but that can take a while. Furthermore, not every MIR software might be of sufficient interest to a general audience such that it fits into the larger package set. As a transitionary period, and as a early development area, mirpkgs aims to drive public interest and collaboration on getting MIR specific software to benefit from having reproducible builds, without immediately tackling the larger integration work of getting into nixpkgs.
+The goal is to have these packages live within nixpkgs, but that can take a while. Furthermore, not every MIR software might be of sufficient interest to a general audience such that it fits into the larger package set. As a transitionary period, and as an early development area, mirpkgs aims to drive public interest and collaboration on getting MIR specific software to benefit from having reproducible builds, without immediately tackling the larger integration work of getting into nixpkgs.
 
 ### Why not just use Docker instead?
 
