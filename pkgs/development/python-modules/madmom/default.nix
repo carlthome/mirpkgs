@@ -1,6 +1,7 @@
 { lib
 , python3
 , fetchFromGitHub
+, ffmpeg
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -24,11 +25,23 @@ python3.pkgs.buildPythonPackage rec {
   ];
 
   propagatedBuildInputs = with python3.pkgs; [
+    ffmpeg
     mido
     numpy
     pyfftw
     scipy
   ];
+
+  preCheck = ''
+    rm -r madmom
+  '';
+
+  nativeCheckInputs = with python3.pkgs; [
+    ffmpeg
+    pytestCheckHook
+  ];
+
+  pytestFlags = [ "tests/" ];
 
   pythonImportsCheck = [ "madmom" ];
 
