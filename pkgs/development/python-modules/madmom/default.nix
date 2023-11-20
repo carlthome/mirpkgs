@@ -3,7 +3,7 @@
 , fetchFromGitHub
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "madmom";
   version = "0.16.1.dev0";
   format = "setuptools";
