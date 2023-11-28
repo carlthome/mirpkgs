@@ -10,18 +10,16 @@ python3.pkgs.buildPythonPackage rec {
   format = "setuptools";
 
   src = fetchFromGitHub {
-    owner = "CPJKU";
+    owner = "carlthome";
     repo = "madmom";
-    rev = "44f6cbd1a332313110a21036c948f7dde2c769bc";
-    hash = "sha256-yQbkOVc2PAdF1SGfIs0y6qWwS0/A60N/sw9J+KS0OYo=";
+    rev = "8bba9971075316210f1c8efd9ad005e5a6486793";
+    hash = "sha256-KbdIVEzwhyRK5Xh2f2vccwOLDlJyA7lTB6dDDJMKCF0=";
     fetchSubmodules = true;
   };
 
   nativeBuildInputs = with python3.pkgs; [
     wheel
     cython
-    pytest
-    pytest-runner
   ];
 
   propagatedBuildInputs = with python3.pkgs; [
@@ -32,16 +30,16 @@ python3.pkgs.buildPythonPackage rec {
     scipy
   ];
 
+  # Remove source files so pytest only uses the built package.
   preCheck = ''
     rm -r madmom
   '';
 
   nativeCheckInputs = with python3.pkgs; [
     ffmpeg
+    pytest-runner
     pytestCheckHook
   ];
-
-  pytestFlags = [ "tests/" ];
 
   pythonImportsCheck = [ "madmom" ];
 
