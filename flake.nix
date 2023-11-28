@@ -1,7 +1,7 @@
 {
   description = "Nix packages for reproducible MIR research";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/a53f752568e5474fdad6b17f8648291f223853f3";
 
   outputs = { self, nixpkgs }@inputs:
     let
