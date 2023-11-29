@@ -26,8 +26,11 @@ python3.pkgs.buildPythonPackage rec {
     ffmpeg
     mido
     numpy
-    pyfftw
     scipy
+    # TODO Add pyfftw for improved FFT performance.
+    #pyfftw
+    # TODO Add pyaudio for real-time audio I/O.
+    #pyaudio
   ];
 
   # Remove source files so pytest only uses the built package.
