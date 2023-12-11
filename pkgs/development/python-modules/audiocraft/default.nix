@@ -2,6 +2,7 @@
 , python3
 , fetchPypi
 , demucs
+, flashy
 }:
 
 python3.pkgs.buildPythonPackage rec {
