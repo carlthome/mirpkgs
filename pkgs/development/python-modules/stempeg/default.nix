@@ -37,7 +37,7 @@ python3.pkgs.buildPythonPackage rec {
   meta = with lib; {
     description = "Read and write stem/multistream audio files";
     homepage = "https://pypi.org/project/stempeg/";
-    license = with licenses; [ ];
+    license = with licenses; [ mit ];
     maintainers = with maintainers; [ carlthome ];
   };
 }
