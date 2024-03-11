@@ -3,13 +3,13 @@
 , fetchFromGitHub
 , lame
 , cmake
-, clang
+, stdenv
 }:
 
 python3.pkgs.buildPythonPackage rec {
   pname = "lameenc";
   version = "1.6.1";
-  pyproject = true;
+  format = "other";
 
   src = fetchFromGitHub {
     owner = "chrisstaite";
@@ -22,18 +22,19 @@ python3.pkgs.buildPythonPackage rec {
     setuptools
     wheel
     cmake
-    clang
+    pipInstallHook
   ];
 
   propagatedBuildInputs = [ lame ];
 
-  configurePhase = ''
-    cmake -S $src -B $out
-  '';
+  cmakeFlags = [
+    "-DCMAKE_OSX_ARCHITECTURES=${stdenv.hostPlatform.darwinArch}"
+  ];
 
-  buildPhase = ''
-    cd $out
-    make
+  installPhase = ''
+    mkdir -p dist
+    cp *.whl dist
+    pipInstallPhase
   '';
 
   pythonImportsCheck = [ "lameenc" ];
