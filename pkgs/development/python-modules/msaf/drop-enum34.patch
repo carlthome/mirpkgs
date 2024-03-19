@@ -1,0 +1,12 @@
+diff --git a/setup.py b/setup.py
+index 7049ed3..0a2e504 100644
+--- a/setup.py
++++ b/setup.py
+@@ -41,7 +41,6 @@ setup(
+         "audioread",
+         "cvxopt",
+         "decorator",
+-        "enum34",
+         "future",
+         "jams >= 0.3.0",
+         "joblib",
