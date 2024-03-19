@@ -23,5 +23,5 @@
   musdb = pkgs.callPackage ./musdb { inherit stempeg; };
   museval = pkgs.callPackage ./museval { inherit musdb; };
   demucs = pkgs.callPackage ./demucs { inherit diffq dora-search julius hydra-colorlog lameenc museval openunmix submitit treetable; };
-  audiocraft = pkgs.callPackage ./audiocraft { inherit demucs flashy; };
+  audiocraft = pkgs.callPackage ./audiocraft { inherit demucs flashy hydra-colorlog; };
 }

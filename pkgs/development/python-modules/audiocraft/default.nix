@@ -3,6 +3,7 @@
 , fetchPypi
 , demucs
 , flashy
+, hydra-colorlog
 }:
 
 python3.pkgs.buildPythonPackage rec {
