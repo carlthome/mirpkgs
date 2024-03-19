@@ -26,6 +26,10 @@ python3.pkgs.buildPythonApplication rec {
     torch
   ];
 
+  patches = [
+    ./torch-distributed-optional.patch
+  ];
+
   pythonImportsCheck = [ "flashy" ];
 
   meta = with lib; {
