@@ -10,10 +10,10 @@ python3.pkgs.buildPythonPackage rec {
   format = "setuptools";
 
   src = fetchFromGitHub {
-    owner = "carlthome";
+    owner = "CPJKU";
     repo = "madmom";
-    rev = "8bba9971075316210f1c8efd9ad005e5a6486793";
-    hash = "sha256-KbdIVEzwhyRK5Xh2f2vccwOLDlJyA7lTB6dDDJMKCF0=";
+    rev = "0551aa8f48d71a367d92b5d3a347a0cf7cd97cc9";
+    hash = "sha256-ELmv6w4UWtbpMoSnji+HcBptky+zEylpBLMsLaDt/fw=";
     fetchSubmodules = true;
   };
 
@@ -48,16 +48,12 @@ python3.pkgs.buildPythonPackage rec {
 
   disabledTests = [
     # TODO Resolve numerical failures on aarch64-darwin.
-    "TestCLPChromaClass::test_process"
-    "TestResampleFunction::test_values_mono"
-    "TestResampleFunction::test_values_stereo"
-    "TestResampleFunction::test_values_upmixing"
+    "TestCLPChromaClass"
+    "TestResampleFunction"
     # TODO https://github.com/CPJKU/madmom/pull/531
-    "TestTCNBeatTrackerProgram::test_binary"
-    "TestTCNBeatTrackerProgram::test_run"
-    "TestTCNTempoDetectorProgram::test_binary"
-    "TestTCNTempoDetectorProgram::test_run"
-    "TestTCNBeatProcessorClass::test_process_tcn"
+    "TestTCNBeatTrackerProgram"
+    "TestTCNTempoDetectorProgram"
+    "TestTCNBeatProcessorClass"
   ];
 
   meta = with lib; {
