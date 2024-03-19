@@ -1,21 +1,23 @@
 { lib
 , python3
-, fetchPypi
+, fetchFromGitHub
 , jams
 , vmo
 }:
 
 python3.pkgs.buildPythonPackage rec {
   pname = "msaf";
-  version = "0.1.80";
+  version = "0.1.80-dev";
   pyproject = true;
 
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-C+97yN1Al/L8N710Yr/ShFXYV4klHfnO1+mKdVeAYRU=";
+  src = fetchFromGitHub {
+    owner = "urinieto";
+    repo = "msaf";
+    rev = "main";
+    hash = "sha256-MmsgrYC9TthWZQWEIqtz68E0jvO6f9/a6BNatMyH3E4=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  nativeBuildInputs = with python3.pkgs;    [
     setuptools
     wheel
   ];
@@ -24,7 +26,6 @@ python3.pkgs.buildPythonPackage rec {
     audioread
     cvxopt
     decorator
-    enum34
     future
     jams
     joblib
@@ -37,6 +38,10 @@ python3.pkgs.buildPythonPackage rec {
     scipy
     seaborn
     vmo
+  ];
+
+  patches = [
+    ./drop-enum34.patch
   ];
 
   passthru.optional-dependencies = with python3.pkgs; {
