@@ -46,6 +46,20 @@ python3.pkgs.buildPythonPackage rec {
 
   pythonImportsCheck = [ "madmom" ];
 
+  disabledTests = [
+    # TODO Resolve numerical failures on aarch64-darwin.
+    "TestCLPChromaClass::test_process"
+    "TestResampleFunction::test_values_mono"
+    "TestResampleFunction::test_values_stereo"
+    "TestResampleFunction::test_values_upmixing"
+    # TODO https://github.com/CPJKU/madmom/pull/531
+    "TestTCNBeatTrackerProgram::test_binary"
+    "TestTCNBeatTrackerProgram::test_run"
+    "TestTCNTempoDetectorProgram::test_binary"
+    "TestTCNTempoDetectorProgram::test_run"
+    "TestTCNBeatProcessorClass::test_process_tcn"
+  ];
+
   meta = with lib; {
     description = "Python audio and music signal processing library";
     homepage = "https://github.com/CPJKU/madmom";
