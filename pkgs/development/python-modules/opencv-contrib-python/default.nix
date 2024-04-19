@@ -1,6 +1,11 @@
 { lib
 , python3
 , fetchPypi
+, opencl-headers
+, ninja
+, lapack
+, openblas
+, openjpeg
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -32,7 +37,7 @@ python3.pkgs.buildPythonApplication rec {
     description = "Wrapper package for OpenCV python bindings";
     homepage = "https://pypi.org/project/opencv-contrib-python/";
     license = with licenses; [ asl20 mit ];
-    maintainers = with maintainers; [ ];
+    maintainers = with maintainers; [ carlthome ];
     mainProgram = "opencv-contrib-python";
   };
 }
