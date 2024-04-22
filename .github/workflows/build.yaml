@@ -18,5 +18,6 @@ jobs:
     with:
       cachix-cache: mirpkgs
       runs-on: ${{ matrix.os }}
+      upload: false
     secrets:
       cachix-token: ${{ secrets.CACHIX_AUTH_TOKEN }}

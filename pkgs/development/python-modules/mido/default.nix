@@ -5,17 +5,17 @@
 
 python3.pkgs.buildPythonPackage rec {
   pname = "mido";
-  version = "1.3.0";
+  version = "1.3.2";
   format = "pyproject";
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-hCguOs40vKP5hCINstvLmCRc/q+4VCYMAuAAdQ3Khqo=";
+    hash = "sha256-Ouootu1zD3N9WxLaNXjevp3FAFj6Nw/pzt7ZGJtnw0g=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.setuptools-scm
+  nativeBuildInputs = with python3.pkgs; [
+    setuptools
+    setuptools-scm
   ];
 
   propagatedBuildInputs = with python3.pkgs; [
