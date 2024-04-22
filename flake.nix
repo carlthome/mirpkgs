@@ -18,7 +18,7 @@
       overlays.default = final: prev: (import ./pkgs/development/python-modules { pkgs = final; });
       templates.default = { path = ./examples/flake; description = "A basic Python environment with mirpkgs included as a nixpkgs overlay"; };
       githubActions = nix-github-actions.lib.mkGithubMatrix {
-        checks = nixpkgs.lib.getAttrs [ "x86_64-linux" "x86_64-darwin" ] self.checks;
+        checks = nixpkgs.lib.getAttrs [ "x86_64-linux" "x86_64-darwin" ] self.packages;
       };
     };
 }
