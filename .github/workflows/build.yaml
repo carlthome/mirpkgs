@@ -8,41 +8,29 @@ on:
       - main
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-    uses: carlthome/workflows/.github/workflows/nix.yaml@main
-    with:
-      cachix-cache: mirpkgs
-      runs-on: ${{ matrix.os }}
-      upload: false
-    secrets:
-      cachix-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
-
-  nix-matrix:
+  generate-build-matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v24
+      - uses: cachix/install-nix-action@v26
       - id: set-matrix
-        name: Generate Nix Matrix
         run: |
           set -Eeu
           matrix="$(nix eval --json '.#githubActions.matrix')"
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
 
-  nix-build:
-    needs: nix-matrix
-    runs-on: ${{ matrix.os }}
+  build:
+    needs: generate-build-matrix
     strategy:
-      matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.generate-build-matrix.outputs.matrix)}}
       fail-fast: false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v24
-      - run: nix build --print-build-logs ".#${{ matrix.attr }}"
+    uses: carlthome/workflows/.github/workflows/nix.yaml@main
+    with:
+      attribute: ".#${{ matrix.attr }}"
+      cachix-cache: mirpkgs
+      runs-on: ${{ matrix.os }}
+      upload: false
+    secrets:
+      cachix-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
