@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  generate-build-matrix:
+  nix-matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -26,9 +26,9 @@ jobs:
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
 
   build:
-    needs: generate-build-matrix
+    needs: nix-matrix
     strategy:
-      matrix: ${{fromJSON(needs.generate-build-matrix.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
       fail-fast: false
     uses: carlthome/workflows/.github/workflows/nix.yaml@main
     with:
