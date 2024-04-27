@@ -34,4 +34,4 @@ jobs:
         with:
           name: mirpkgs
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build --print-build-logs ".#${{ matrix.attr }}"
+      - run: nix build --print-build-logs ".#${{ matrix.package }}"
