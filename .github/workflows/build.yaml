@@ -36,7 +36,7 @@ jobs:
     needs: collect-builds
     runs-on: ${{ matrix.os }}
     strategy:
-      matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.collect-builds.outputs.matrix)}}
       fail-fast: false
       max-parallel: 4
     steps:
