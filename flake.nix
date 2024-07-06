@@ -8,7 +8,7 @@
 
   outputs = { self, nixpkgs, nix-github-actions }@inputs:
     let
-      supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
     in
     {
@@ -18,7 +18,7 @@
       overlays.default = final: prev: (import ./pkgs/development/python-modules { pkgs = final; });
       templates.default = { path = ./examples/flake; description = "A basic Python environment with mirpkgs included as a nixpkgs overlay"; };
       githubActions = nix-github-actions.lib.mkGithubMatrix {
-        checks = nixpkgs.lib.getAttrs [ "x86_64-linux" "x86_64-darwin" ] self.packages;
+        checks = nixpkgs.lib.getAttrs [ "x86_64-linux" ] self.packages;
       };
     };
 }

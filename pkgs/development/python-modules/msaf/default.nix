@@ -5,7 +5,7 @@
 , vmo
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage {
   pname = "msaf";
   version = "0.1.80-dev";
   pyproject = true;
@@ -14,7 +14,7 @@ python3.pkgs.buildPythonPackage rec {
     owner = "urinieto";
     repo = "msaf";
     rev = "main";
-    hash = "sha256-MmsgrYC9TthWZQWEIqtz68E0jvO6f9/a6BNatMyH3E4=";
+    hash = "sha256-J4EctO4LHJVRGRZoODl/d7yVNixoN5mocK8pJ1R3kZA=";
   };
 
   nativeBuildInputs = with python3.pkgs;    [

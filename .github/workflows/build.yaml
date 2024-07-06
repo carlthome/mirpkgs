@@ -3,35 +3,11 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  generate-matrix:
-    name: Generate job matrices
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.packages.outputs.matrix }}
-    steps:
-      - id: packages
-        uses: hellofresh/action-changed-files@v3
-        with:
-          pattern: pkgs/development/python-modules/(?P<package>[^/]+)
-          default-patterns: flake.lock
-
   build:
-    needs: generate-matrix
-    runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{fromJSON(needs.generate-matrix.outputs.matrix)}}
-      fail-fast: false
-      max-parallel: 4
-    steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v24
-      - uses: cachix/cachix-action@v14
-        with:
-          name: mirpkgs
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build --print-build-logs ".#${{ matrix.package }}"
+    uses: carlthome/workflows/.github/workflows/nix.yaml@main
+    with:
+      cachix-cache: mirpkgs
+    secrets:
+      cachix-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
