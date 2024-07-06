@@ -25,7 +25,25 @@ python3.pkgs.buildPythonApplication rec {
     python3.pkgs.scikit-build
     python3.pkgs.setuptools
     python3.pkgs.wheel
+
+    #python3.pkgs.opencv4
+    #opencl-headers
+    #ninja
+    #lapack
+    #openblas
+    #openjpeg
   ];
+
+  dontUseCmakeConfigure = true;
+
+  #ENABLE_CONTRIB = 1;
+  #CMAKE_ARGS = "-DCMAKE_VERBOSE_MAKEFILE=ON";
+  #VERBOSE = 1;
+
+  # Take latest packages by default.
+  postPatch = ''
+    substituteInPlace pyproject.toml --replace-fail "==" ">="
+  '';
 
   propagatedBuildInputs = with python3.pkgs; [
     numpy
