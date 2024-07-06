@@ -13,6 +13,10 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-Ouootu1zD3N9WxLaNXjevp3FAFj6Nw/pzt7ZGJtnw0g=";
   };
 
+  postPatch = ''
+    substituteInPlace pyproject.toml --replace-fail "packaging~=23.1" "packaging>=23.1"
+  '';
+
   nativeBuildInputs = with python3.pkgs; [
     setuptools
     setuptools-scm
