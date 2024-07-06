@@ -25,7 +25,7 @@ jobs:
 
   build:
     needs: detect-changes
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJSON(needs.detect-changes.outputs.matrix)}}
       fail-fast: false
