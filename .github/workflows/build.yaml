@@ -8,22 +8,32 @@ on:
       - main
 
 jobs:
-  nix-matrix:
+  check:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v24
+      - run: nix flake check --all-systems
+
+  collect-builds:
+    needs: check
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v24
+      - run: nix flake check --all-systems
       - id: set-matrix
-        name: Generate Nix Matrix
         run: |
           set -Eeu
           matrix="$(nix eval --json '.#githubActions.matrix')"
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
 
-  nix-build:
-    needs: nix-matrix
+  build:
+    needs: collect-builds
     runs-on: ${{ matrix.os }}
     strategy:
       matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
