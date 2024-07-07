@@ -1,6 +1,8 @@
 { lib
 , python3
 , fetchPypi
+, mediapipe
+, soundcloud-lib
 , ...
 }:
 
