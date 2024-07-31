@@ -24,6 +24,8 @@ python3.pkgs.buildPythonApplication rec {
     torch
   ];
 
+  checkInputs = with python3.pkgs; [ pytest-runner ];
+
   pythonImportsCheck = [ "x_transformers" ];
 
   meta = with lib; {
