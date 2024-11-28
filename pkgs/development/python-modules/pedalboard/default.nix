@@ -7,6 +7,7 @@
 , libcxx
 , darwin
 , pcre
+, rubberband
 }:
 
 let
@@ -23,46 +24,47 @@ let
 in
 python3.pkgs.buildPythonPackage rec {
   pname = "pedalboard";
-  version = "0.8.3";
-  pyproject = true;
-
-  NIX_CFLAGS_COMPILE = lib.optionals stdenv.isDarwin [
-    "-I${lib.getDev libcxx}/include/c++/v1"
-    "-I${juce6}/share/juce/modules"
-    "-I${juce6}/share/juce/modules/juce_audio_processors/format_types/VST3_SDK"
-  ];
+  version = "0.9.12";
+  #pyproject = true;
 
   src = fetchgit {
     url = "https://github.com/spotify/pedalboard.git";
     rev = "v${version}";
-    hash = "sha256-kp2PJ3dadfbsxtAogYnwc0dzfEbmET/tIUP0M9B0Udg=";
-    fetchSubmodules = true;
+    hash = "sha256-tdnBpnHzSD7k2QIlfbtVIr7g2ZadwdXWZ2EdA4q/3H0=";
+    fetchSubmodules = false;
   };
 
+  NIX_CFLAGS_COMPILE = [
+    "-I${lib.getDev libcxx}/include/c++/v1"
+    "-I${juce6}/share/juce/modules"
+    "-I${juce6}/share/juce/modules/juce_audio_processors/format_types/VST3_SDK"
+    "-I${python3.pkgs.pybind11}/include"
+    "-I${lib.getDev rubberband}/include"
+  ];
+
   nativeBuildInputs = with python3.pkgs; [
-    setuptools
-    wheel
     pybind11
-    juce6
-    pcre
+    rubberband
+    #setuptools
+    #wheel
+    #numpy
+    #juce
+    #pcre
   ];
 
   propagatedBuildInputs = with python3.pkgs; [
     numpy
-    setuptools
-    wheel
-    pybind11
-    juce6
   ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
     Accelerate
-    AudioToolbox
+    AVFoundation
+    # AudioToolbox
     AudioUnit
-    Carbon
+    # Carbon
     Cocoa
-    CoreAudio
+    #CoreAudio
     CoreAudioKit
-    CoreServices
-    DiscRecording
+    # CoreServices
+    # DiscRecording
     MetalKit
     WebKit
   ]);
