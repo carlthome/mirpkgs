@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v24
-      # TODO - run: nix flake check --all-systems
+      - run: nix flake check --all-systems
 
   detect-changes:
     needs: check
