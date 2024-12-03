@@ -30,6 +30,10 @@ python3.pkgs.buildPythonPackage rec {
     pytest-cov
   ];
 
+  patches = [
+    ./python312.patch
+  ];
+
   pythonImportsCheck = [ "jams" ];
 
   meta = with lib; {
