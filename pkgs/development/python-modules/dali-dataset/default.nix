@@ -6,7 +6,7 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "dali-dataset";
   version = "1.1";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchPypi {
     pname = "DALI-dataset";
@@ -14,15 +14,17 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-1PA581EiRkkgcc5w6fWQF8atZMz5+JRGY/02qcgWe3A=";
   };
 
+  nativeBuildInputs = with python3.pkgs; [
+    setuptools
+  ];
+
   propagatedBuildInputs = with python3.pkgs; [
-    youtube-dl
+    yt-dlp
     numpy
   ];
 
-  checkPhase = ''
-    runHook preCheck
-    ${python3.interpreter} -m unittest
-    runHook postCheck
+  postPatch = ''
+    substituteInPlace setup.py DALI/download.py --replace-fail "youtube_dl" "yt_dlp"
   '';
 
   pythonImportsCheck = [ "DALI" ];
