@@ -40,7 +40,6 @@ python3.pkgs.buildPythonPackage rec {
 
   nativeCheckInputs = with python3.pkgs; [
     ffmpeg
-    pytest-runner
     pytestCheckHook
   ];
 
