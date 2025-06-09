@@ -1,7 +1,8 @@
-{ lib
-, python3
-, fetchPypi
-, read-version
+{
+  lib,
+  python3,
+  fetchPypi,
+  read-version,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -18,6 +19,7 @@ python3.pkgs.buildPythonPackage rec {
     read-version
     setuptools
     wheel
+    decorator
   ];
 
   propagatedBuildInputs = with python3.pkgs; [
