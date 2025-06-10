@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -13,12 +14,11 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-K5oBNHjFgex3i7UhgpvIovGBi9Rcqx+EmDRyjJtYy8k=";
   };
 
-  nativeBuildInputs = [
+  build-system = [
     python3.pkgs.setuptools
-    python3.pkgs.wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     ftfy
     pillow
     regex
@@ -28,13 +28,15 @@ python3.pkgs.buildPythonApplication rec {
     tqdm
   ];
 
-  pythonImportsCheck = [ "v_diffusion_pytorch" ];
+  pythonImportsCheck = [
+    "diffusion"
+  ];
 
-  meta = with lib; {
+  meta = {
     description = "V objective diffusion inference code for PyTorch";
     homepage = "https://pypi.org/project/v-diffusion-pytorch/";
-    license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ ];
     mainProgram = "v-diffusion-pytorch";
   };
 }
