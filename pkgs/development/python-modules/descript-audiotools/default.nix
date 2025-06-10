@@ -1,11 +1,7 @@
-{ lib
-, python3
-, fetchPypi
-, argbind
-, pyloudnorm
-, pystoi
-, randomname
-, torch-stoi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -18,12 +14,12 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-LN02MCXHcbisxT1e+ex340+S4YInLEvn/QEYqZtqXio=";
   };
 
-  nativeBuildInputs = [
+  build-system = [
     python3.pkgs.setuptools
     python3.pkgs.wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     argbind
     ffmpy
     flatten-dict
@@ -48,7 +44,7 @@ python3.pkgs.buildPythonApplication rec {
     tqdm
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     docs = [
       myst-nb
       myst-parser
@@ -69,13 +65,15 @@ python3.pkgs.buildPythonApplication rec {
     ];
   };
 
-  pythonImportsCheck = [ "descript_audiotools" ];
+  pythonImportsCheck = [
+    "descript_audiotools"
+  ];
 
-  meta = with lib; {
+  meta = {
     description = "Utilities for handling audio";
     homepage = "https://pypi.org/project/descript-audiotools/";
-    license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ ];
     mainProgram = "descript-audiotools";
   };
 }
