@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -12,6 +13,11 @@ python3.pkgs.buildPythonApplication rec {
     inherit pname version;
     hash = "sha256-yMHLsCOTuQQtNjCbYyMGHIAXgUW0HUL1/jooB3MiGac=";
   };
+  
+  patches = [
+    # This is part of the standard library and shoudl not be mentioned in setup.py
+    ./remove-argparse.patch
+  ];
 
   nativeBuildInputs = [
     python3.pkgs.setuptools
@@ -19,7 +25,6 @@ python3.pkgs.buildPythonApplication rec {
   ];
 
   propagatedBuildInputs = with python3.pkgs; [
-    #argparse
     configparser
     gin-config
     gradio

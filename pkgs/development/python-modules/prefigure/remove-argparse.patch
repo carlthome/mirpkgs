@@ -1,0 +1,13 @@
+diff --git a/setup.py b/setup.py
+index 5f46d9d..a078be0 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,7 +15,7 @@ setup(
+     author_email='scott.hawley@belmont.edu',
+     license='MIT',
+     packages=['prefigure'],
+-    install_requires=['argparse',
++    install_requires=[
+                       'configparser',
+                       'wandb',
+                       'pytorch_lightning',
