@@ -6,6 +6,10 @@
   fetchFromGitHub,
   python3Packages,
   gcc,
+  juce,
+  python3,
+  fetchgit,
+  libcxx,
 }:
 
 let
@@ -46,25 +50,31 @@ python3.pkgs.buildPythonPackage rec {
     pcre
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
-    numpy
-    setuptools
-    wheel
-    pybind11
-    juce6
-  ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
-    Accelerate
-    AudioToolbox
-    AudioUnit
-    Carbon
-    Cocoa
-    CoreAudio
-    CoreAudioKit
-    CoreServices
-    DiscRecording
-    MetalKit
-    WebKit
-  ]);
+  propagatedBuildInputs =
+    with python3.pkgs;
+    [
+      numpy
+      setuptools
+      wheel
+      pybind11
+      juce6
+    ]
+    ++ lib.optionals stdenv.isDarwin (
+      with darwin.apple_sdk.frameworks;
+      [
+        Accelerate
+        AudioToolbox
+        AudioUnit
+        Carbon
+        Cocoa
+        CoreAudio
+        CoreAudioKit
+        CoreServices
+        DiscRecording
+        MetalKit
+        WebKit
+      ]
+    );
 
   meta = with lib; {
     description = "A Python library for working with audio";
