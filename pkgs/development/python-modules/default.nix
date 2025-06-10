@@ -17,6 +17,8 @@ rec {
   music21 = pkgs.callPackage ./music21 { };
   dali-dataset = pkgs.callPackage ./dali-dataset { };
   mido = pkgs.callPackage ./mido { };
+  opencv-contrib-python = pkgs.callPackage ./opencv-contrib-python { };
+  mediapipe = pkgs.callPackage ./mediapipe { inherit opencv-contrib-python; };
   pretty-midi = pkgs.callPackage ./pretty-midi { inherit mido; };
   mirdata = pkgs.callPackage ./mirdata {
     inherit
