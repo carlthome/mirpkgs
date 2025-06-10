@@ -15,7 +15,7 @@ python3.pkgs.buildPythonPackage {
     owner = "urinieto";
     repo = "msaf";
     rev = "main";
-    hash = "sha256-J4EctO4LHJVRGRZoODl/d7yVNixoN5mocK8pJ1R3kZA=";
+    hash = "sha256-azib8QRg0cf5q4E4DzeuytgH1PEoQEp1fY31NzPzefY=";
   };
 
   nativeBuildInputs = with python3.pkgs; [
