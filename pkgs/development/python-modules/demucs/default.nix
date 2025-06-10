@@ -1,15 +1,16 @@
-{ lib
-, python3
-, fetchPypi
-, diffq
-, dora-search
-, hydra-colorlog
-, julius
-, lameenc
-, museval
-, openunmix
-, submitit
-, treetable
+{
+  lib,
+  python3,
+  fetchPypi,
+  diffq,
+  dora-search,
+  hydra-colorlog,
+  julius,
+  lameenc,
+  museval,
+  openunmix,
+  submitit,
+  treetable,
 }:
 
 python3.pkgs.buildPythonPackage rec {

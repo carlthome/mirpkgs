@@ -1,10 +1,11 @@
-{ lib
-, python3
-, fetchFromGitHub
-, jams
-, pretty-midi
-, music21
-, dali-dataset
+{
+  lib,
+  python3,
+  fetchFromGitHub,
+  jams,
+  pretty-midi,
+  music21,
+  dali-dataset,
 }:
 
 python3.pkgs.buildPythonPackage rec {

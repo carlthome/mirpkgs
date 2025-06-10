@@ -1,4 +1,5 @@
-{ pkgs, ... }: rec {
+{ pkgs, ... }:
+rec {
   diffq = pkgs.callPackage ./diffq { };
   encodec = pkgs.callPackage ./encodec { };
   jams = pkgs.callPackage ./jams { };
@@ -16,9 +17,19 @@
   dali-dataset = pkgs.callPackage ./dali-dataset { };
   mido = pkgs.callPackage ./mido { };
   pretty-midi = pkgs.callPackage ./pretty-midi { inherit mido; };
-  mirdata = pkgs.callPackage ./mirdata { inherit jams pretty-midi music21 dali-dataset; };
+  mirdata = pkgs.callPackage ./mirdata {
+    inherit
+      jams
+      pretty-midi
+      music21
+      dali-dataset
+      ;
+  };
   hydra-colorlog = pkgs.callPackage ./hydra-colorlog { inherit read-version; };
-  msaf = pkgs.callPackage ./msaf { inherit jams; inherit vmo; };
+  msaf = pkgs.callPackage ./msaf {
+    inherit jams;
+    inherit vmo;
+  };
   dora-search = pkgs.callPackage ./dora-search { inherit treetable submitit; };
   musdb = pkgs.callPackage ./musdb { inherit stempeg; };
   museval = pkgs.callPackage ./museval { inherit musdb; };

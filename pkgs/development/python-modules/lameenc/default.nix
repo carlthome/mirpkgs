@@ -1,9 +1,10 @@
-{ lib
-, python3
-, fetchFromGitHub
-, lame
-, cmake
-, stdenv
+{
+  lib,
+  python3,
+  fetchFromGitHub,
+  lame,
+  cmake,
+  stdenv,
 }:
 
 python3.pkgs.buildPythonPackage rec {

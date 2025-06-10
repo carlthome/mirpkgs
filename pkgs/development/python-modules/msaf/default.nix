@@ -1,8 +1,9 @@
-{ lib
-, python3
-, fetchFromGitHub
-, jams
-, vmo
+{
+  lib,
+  python3,
+  fetchFromGitHub,
+  jams,
+  vmo,
 }:
 
 python3.pkgs.buildPythonPackage {
@@ -17,7 +18,7 @@ python3.pkgs.buildPythonPackage {
     hash = "sha256-J4EctO4LHJVRGRZoODl/d7yVNixoN5mocK8pJ1R3kZA=";
   };
 
-  nativeBuildInputs = with python3.pkgs;    [
+  nativeBuildInputs = with python3.pkgs; [
     setuptools
     wheel
   ];
