@@ -1,53 +1,15 @@
 { pkgs, ... }:
-pkgs.lib.makeScope pkgs.newScope (self: {
-  aeiou = self.callPackage ./aeiou { };
-  alias-free-torch = self.callPackage ./alias-free-torch { };
-  argbind = self.callPackage ./argbind { };
-  audiocraft = self.callPackage ./audiocraft { };
-  audioscrape = self.callPackage ./audioscrape { };
-  auraloss = self.callPackage ./auraloss { };
-  dali-dataset = self.callPackage ./dali-dataset { };
-  demucs = self.callPackage ./demucs { };
-  descript-audio-codec = self.callPackage ./descript-audio-codec { };
-  descript-audiotools = self.callPackage ./descript-audiotools { };
-  diffq = self.callPackage ./diffq { };
-  dora-search = self.callPackage ./dora-search { };
-  einops-exts = self.callPackage ./einops-exts { };
-  einx = self.callPackage ./einx { };
-  ema-pytorch = self.callPackage ./ema-pytorch { };
-  encodec = self.callPackage ./encodec { };
-  flashy = self.callPackage ./flashy { };
-  hydra-colorlog = self.callPackage ./hydra-colorlog { };
-  jams = self.callPackage ./jams { };
-  julius = self.callPackage ./julius { };
-  laion-clap = self.callPackage ./laion-clap { };
-  lameenc = self.callPackage ./lameenc { };
-  local-attention = self.callPackage ./local-attention { };
-  madmom = self.callPackage ./madmom { };
-  mediapipe = self.callPackage ./mediapipe { };
-  mido = self.callPackage ./mido { };
-  mirdata = self.callPackage ./mirdata { };
-  msaf = self.callPackage ./msaf { };
-  musdb = self.callPackage ./musdb { };
-  museval = self.callPackage ./museval { };
-  music21 = self.callPackage ./music21 { };
-  opencv-contrib-python = self.callPackage ./opencv-contrib-python { };
-  openunmix = self.callPackage ./openunmix { };
-  pedalboard = self.callPackage ./pedalboard { };
-  prefigure = self.callPackage ./prefigure { };
-  pretty-midi = self.callPackage ./pretty-midi { };
-  pyloudnorm = self.callPackage ./pyloudnorm { };
-  pystoi = self.callPackage ./pystoi { };
-  randomname = self.callPackage ./randomname { };
-  read-version = self.callPackage ./read-version { };
-  soundcloud-lib = self.callPackage ./soundcloud-lib { };
-  stable-audio-tools = self.callPackage ./stable-audio-tools { };
-  stempeg = self.callPackage ./stempeg { };
-  submitit = self.callPackage ./submitit { };
-  torch-stoi = self.callPackage ./torch-stoi { };
-  treetable = self.callPackage ./treetable { };
-  v-diffusion-pytorch = self.callPackage ./v-diffusion-pytorch { };
-  vector-quantize-pytorch = self.callPackage ./vector-quantize-pytorch { };
-  vmo = self.callPackage ./vmo { };
-  x-transformers = self.callPackage ./x-transformers { };
-})
+let
+  subdirectories = builtins.attrNames (
+    pkgs.lib.filterAttrs (name: type: type == "directory") (builtins.readDir ./.)
+  );
+  mkScope =
+    self:
+    builtins.listToAttrs (
+      map (dir: {
+        name = dir;
+        value = self.callPackage (./. + "/${dir}") { };
+      }) subdirectories
+    );
+in
+pkgs.lib.makeScope pkgs.newScope mkScope
