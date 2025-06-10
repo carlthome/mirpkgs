@@ -1,12 +1,11 @@
-{ lib
-, python3
-, fetchgit
-, fetchFromGitHub
-, juce
-, stdenv
-, libcxx
-, darwin
-, pcre
+{
+  pkgs,
+  stdenv,
+  lib,
+  fetchPypi,
+  fetchFromGitHub,
+  python3Packages,
+  gcc,
 }:
 
 let

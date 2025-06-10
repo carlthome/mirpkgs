@@ -1,8 +1,9 @@
-{ lib
-, python3
-, fetchPypi
-, treetable
-, submitit
+{
+  lib,
+  python3,
+  fetchPypi,
+  treetable,
+  submitit,
 }:
 
 python3.pkgs.buildPythonPackage rec {
