@@ -31,6 +31,10 @@
   pretty-midi = pkgs.callPackage ./pretty-midi { inherit mido; };
   aeiou = pkgs.callPackage ./aeiou { inherit pedalboard; };
   mirdata = pkgs.callPackage ./mirdata { inherit jams pretty-midi music21 dali-dataset; };
+  soundcloud-lib = pkgs.callPackage ./soundcloud-lib { };
+  opencv-contrib-python = pkgs.callPackage ./opencv-contrib-python { };
+  mediapipe = pkgs.callPackage ./mediapipe { inherit opencv-contrib-python; };
+  audioscrape = pkgs.callPackage ./audioscrape { inherit mediapipe soundcloud-lib; };
   opencv-contrib-python = pkgs.callPackage ./opencv-contrib-python { };
   mediapipe = pkgs.callPackage ./mediapipe { inherit opencv-contrib-python; };
   pretty-midi = pkgs.callPackage ./pretty-midi { inherit mido; };
