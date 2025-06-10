@@ -19,9 +19,11 @@ python3.pkgs.buildPythonPackage rec {
     wheel
   ];
 
-  nativeCheckInputs = with python3.pkgs; [
-    unittestCheckHook
-  ];
+  checkPhase = ''
+    echo "Running tests..."
+    python test.py
+    echo "Tests completed successfully."
+  '';
 
   pythonImportsCheck = [ "treetable" ];
 
