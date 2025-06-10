@@ -7,6 +7,7 @@
   python3Packages,
   gcc,
   juce,
+  pcre,
   python3,
   fetchgit,
   libcxx,
