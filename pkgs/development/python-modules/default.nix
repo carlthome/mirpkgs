@@ -22,6 +22,7 @@
   prefigure = pkgs.callPackage ./prefigure { };
   treetable = pkgs.callPackage ./treetable { };
   vmo = pkgs.callPackage ./vmo { };
+  madmom = pkgs.callPackage ./madmom { };
   music21 = pkgs.callPackage ./music21 { };
   dali-dataset = pkgs.callPackage ./dali-dataset { };
   mido = pkgs.callPackage ./mido { };
@@ -30,8 +31,22 @@
   pretty-midi = pkgs.callPackage ./pretty-midi { inherit mido; };
   aeiou = pkgs.callPackage ./aeiou { inherit pedalboard; };
   mirdata = pkgs.callPackage ./mirdata { inherit jams pretty-midi music21 dali-dataset; };
+  opencv-contrib-python = pkgs.callPackage ./opencv-contrib-python { };
+  mediapipe = pkgs.callPackage ./mediapipe { inherit opencv-contrib-python; };
+  pretty-midi = pkgs.callPackage ./pretty-midi { inherit mido; };
+  mirdata = pkgs.callPackage ./mirdata {
+    inherit
+      jams
+      pretty-midi
+      music21
+      dali-dataset
+      ;
+  };
   hydra-colorlog = pkgs.callPackage ./hydra-colorlog { inherit read-version; };
-  msaf = pkgs.callPackage ./msaf { inherit jams; inherit vmo; };
+  msaf = pkgs.callPackage ./msaf {
+    inherit jams;
+    inherit vmo;
+  };
   dora-search = pkgs.callPackage ./dora-search { inherit treetable submitit; };
   musdb = pkgs.callPackage ./musdb { inherit stempeg; };
   museval = pkgs.callPackage ./museval { inherit musdb; };
