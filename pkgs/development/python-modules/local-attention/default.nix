@@ -1,36 +1,43 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
+  hyper-connections,
+  pytest-runner,
 }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "local-attention";
-  version = "1.9.14";
+  version = "1.11.1";
   pyproject = true;
 
   src = fetchPypi {
     pname = "local_attention";
     inherit version;
-    hash = "sha256-g08MUGhXtVAr3VrurCG7BJsPLk2WyRg5++5J16PPudw=";
+    hash = "sha256-vyRFPR6iUe0HWjpMc05bYI5J6cSJ+bhn2luVUDjSwGM=";
   };
 
-  nativeBuildInputs = [
+  build-system = [
     python3.pkgs.setuptools
     python3.pkgs.wheel
+    pytest-runner
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     einops
+    hyper-connections
     torch
   ];
 
-  pythonImportsCheck = [ "local_attention" ];
+  pythonImportsCheck = [
+    "local_attention"
+  ];
 
-  meta = with lib; {
+  meta = {
     description = "Local attention, window with lookback, for language modeling";
     homepage = "https://pypi.org/project/local-attention/";
-    license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ ];
     mainProgram = "local-attention";
   };
 }
