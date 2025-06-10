@@ -1,36 +1,51 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "x-transformers";
-  version = "1.31.14";
+  version = "2.3.12";
   pyproject = true;
 
   src = fetchPypi {
     pname = "x_transformers";
     inherit version;
-    hash = "sha256-k1DWZYnhN+IBQyBAKQh58nsQZHfZ4+SFSOAkNvNGNsA=";
+    hash = "sha256-BJ5Ag7nH3shVED9SExKeyBOJPqeXGiV7js/QlXU/5i4=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = [
+    python3.pkgs.hatchling
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     einops
+    einx
+    loguru
+    packaging
     torch
   ];
 
-  pythonImportsCheck = [ "x_transformers" ];
+  optional-dependencies = with python3.pkgs; {
+    examples = [
+      lion-pytorch
+      tqdm
+    ];
+    test = [
+      pytest
+    ];
+  };
 
-  meta = with lib; {
-    description = "X-Transformers - Pytorch";
+  pythonImportsCheck = [
+    "x_transformers"
+  ];
+
+  meta = {
+    description = "X-Transformers";
     homepage = "https://pypi.org/project/x-transformers/";
-    license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ ];
     mainProgram = "x-transformers";
   };
 }
