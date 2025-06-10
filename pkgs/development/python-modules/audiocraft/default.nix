@@ -1,8 +1,9 @@
-{
-  lib,
-  python3,
-  fetchPypi,
-  demucs,
+{ lib
+, python3
+, fetchPypi
+, demucs
+, flashy
+, hydra-colorlog
 }:
 
 python3.pkgs.buildPythonPackage rec {

@@ -52,8 +52,11 @@
     inherit vmo;
   };
   dora-search = pkgs.callPackage ./dora-search { inherit treetable submitit; };
+  flashy = pkgs.callPackage ./flashy { inherit dora-search; };
   musdb = pkgs.callPackage ./musdb { inherit stempeg; };
   museval = pkgs.callPackage ./museval { inherit musdb; };
+  demucs = pkgs.callPackage ./demucs { inherit diffq dora-search julius hydra-colorlog lameenc museval openunmix submitit treetable; };
+  audiocraft = pkgs.callPackage ./audiocraft { inherit demucs flashy hydra-colorlog; };
   einx = pkgs.callPackage ./einx { };
   vector-quantize-pytorch = pkgs.callPackage ./vector-quantize-pytorch { inherit einx; };
   x-transformers = pkgs.callPackage ./x-transformers { };
