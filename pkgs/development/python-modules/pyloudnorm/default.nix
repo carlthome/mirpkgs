@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -13,25 +14,32 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-Y81OGX3qTneVFg6gjtAtMYCRvOiD5Dam28WWMya3Hh4=";
   };
 
-  nativeBuildInputs = [
+  # The project relies on a setup.py so we need to remove the malformed pyproject.toml
+  preBuild = ''
+    rm pyproject.toml
+  '';
+
+  build-system = [
     python3.pkgs.attrs
     python3.pkgs.setuptools
     python3.pkgs.wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     future
     numpy
     scipy
   ];
 
-  pythonImportsCheck = [ "pyloudnorm" ];
+  pythonImportsCheck = [
+    "pyloudnorm"
+  ];
 
-  meta = with lib; {
+  meta = {
     description = "Implementation of ITU-R BS.1770-4 loudness algorithm in Python";
     homepage = "https://pypi.org/project/pyloudnorm/";
-    license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ ];
     mainProgram = "pyloudnorm";
   };
 }
