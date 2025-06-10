@@ -13,7 +13,6 @@ jobs:
       - run: nix flake check --all-systems
 
   detect-changes:
-    needs: check
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.packages.outputs.matrix }}
