@@ -1,10 +1,11 @@
-{ pkgs
-, stdenv
-, lib
-, fetchPypi
-, fetchFromGitHub
-, python3Packages
-, gcc
+{
+  pkgs,
+  stdenv,
+  lib,
+  fetchPypi,
+  fetchFromGitHub,
+  python3Packages,
+  gcc,
 }:
 pkgs.python3Packages.buildPythonPackage rec {
   pname = "pedalboard";

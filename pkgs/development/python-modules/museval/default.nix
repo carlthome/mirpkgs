@@ -1,8 +1,9 @@
-{ lib
-, python3
-, fetchPypi
-, musdb
-, ffmpeg
+{
+  lib,
+  python3,
+  fetchPypi,
+  musdb,
+  ffmpeg,
 }:
 
 python3.pkgs.buildPythonPackage rec {

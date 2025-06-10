@@ -1,7 +1,8 @@
-{ lib
-, python3
-, fetchPypi
-, demucs
+{
+  lib,
+  python3,
+  fetchPypi,
+  demucs,
 }:
 
 python3.pkgs.buildPythonPackage rec {

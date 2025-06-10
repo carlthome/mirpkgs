@@ -1,7 +1,8 @@
-{ lib
-, python3
-, fetchPypi
-, mido
+{
+  lib,
+  python3,
+  fetchPypi,
+  mido,
 }:
 
 python3.pkgs.buildPythonPackage rec {
