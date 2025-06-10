@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonApplication rec {
@@ -13,22 +14,25 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-YW8UWzQR+Onjvl2lyWi743LlXCSd4R+qkJx6S3RYCmw=";
   };
 
-  nativeBuildInputs = [
+  build-system = [
     python3.pkgs.setuptools
     python3.pkgs.wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     einops
+    torch
   ];
 
-  pythonImportsCheck = [ "einops_exts" ];
+  pythonImportsCheck = [
+    "einops_exts"
+  ];
 
-  meta = with lib; {
+  meta = {
     description = "Einops Extensions";
     homepage = "https://pypi.org/project/einops-exts/";
-    license = licenses.mit;
-    maintainers = with maintainers; [ ];
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ ];
     mainProgram = "einops-exts";
   };
 }
