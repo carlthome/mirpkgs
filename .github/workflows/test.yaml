@@ -29,6 +29,7 @@ jobs:
   build:
     needs: detect-changes
     runs-on: ubuntu-latest
+    environment: ${{ matrix.package }}
     strategy:
       matrix: ${{fromJSON(needs.detect-changes.outputs.matrix)}}
       fail-fast: false
