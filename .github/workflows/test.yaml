@@ -22,7 +22,7 @@ jobs:
       - id: packages
         uses: hellofresh/action-changed-files@v3
         with:
-          pattern: pkgs/development/python-modules/(?P<package>[^/.]+)
+          pattern: pkgs/development/python-modules/(?P<package>[^/]+)/
           defaults: true
           default-patterns: flake.lock
 
