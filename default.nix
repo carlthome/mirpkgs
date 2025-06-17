@@ -22,7 +22,8 @@ let
         "libnvjitlink"
       ];
   };
-  pythonPackages = import ./pkgs/development/python-modules { inherit pkgs; };
+  lib = nixpkgs.lib;
+  pythonPackages = import ./pkgs/development/python-modules { inherit pkgs lib; };
   pythonEnv = pkgs.python3.buildEnv.override {
     extraLibs = (with pkgs.python3Packages; [ ipython ]) ++ builtins.attrValues pythonPackages;
     ignoreCollisions = true;

@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   subdirectories = builtins.attrNames (
-    pkgs.lib.filterAttrs (name: type: type == "directory") (builtins.readDir ./.)
+    lib.filterAttrs (name: type: type == "directory") (builtins.readDir ./.)
   );
 
   mkScope =
@@ -13,7 +13,7 @@ let
       }) subdirectories
     );
 
-  scope = pkgs.lib.makeScope pkgs.newScope mkScope;
+  scope = lib.makeScope pkgs.newScope mkScope;
 
   packages = builtins.listToAttrs (
     map (dir: {
