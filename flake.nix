@@ -21,7 +21,7 @@
       devShells = forAllSystems (system: {
         default = import ./shell.nix { pkgs = nixpkgs.legacyPackages.${system}; };
       });
-      overlays.default = final: prev: (import ./pkgs/development/python-modules { pkgs = final; });
+      overlays.default = final: prev: (import ./pkgs/development/python-modules { pkgs = prev; });
       templates.default = {
         path = ./examples/flake;
         description = "A basic Python environment with mirpkgs included as a nixpkgs overlay";
