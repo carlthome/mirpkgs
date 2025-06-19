@@ -2,6 +2,11 @@
   lib,
   python3,
   fetchPypi,
+  argbind,
+  pyloudnorm,
+  pystoi,
+  randomname,
+  torch-stoi,
 }:
 
 python3.pkgs.buildPythonApplication rec {
