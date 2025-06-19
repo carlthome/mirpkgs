@@ -11,6 +11,7 @@
   python3,
   fetchgit,
   libcxx,
+  darwin,
 }:
 
 let
