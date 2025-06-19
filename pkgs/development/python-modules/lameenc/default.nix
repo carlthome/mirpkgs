@@ -1,10 +1,11 @@
-{ lib
-, python3
-, fetchFromGitHub
-, fetchurl
-, lame
-, cmake
-, stdenv
+{
+  lib,
+  python3,
+  fetchFromGitHub,
+  fetchurl,
+  lame,
+  cmake,
+  stdenv,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -31,14 +32,14 @@ python3.pkgs.buildPythonPackage rec {
 
   patches = [ ./no-download.patch ];
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
     cmake
     pipInstallHook
   ];
 
-  propagatedBuildInputs = [ lame ];
+  dependencies = [ lame ];
 
   cmakeFlags = [
     "-DCMAKE_OSX_ARCHITECTURES=${stdenv.hostPlatform.darwinArch}"

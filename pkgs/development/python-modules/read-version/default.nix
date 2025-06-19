@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -14,7 +15,7 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-Py0whSvOkXSyRPfymq6/TnmQTG7VGhlxYyUBX/MGzj8=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
   ];

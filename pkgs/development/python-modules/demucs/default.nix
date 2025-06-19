@@ -1,15 +1,16 @@
-{ lib
-, python3
-, fetchPypi
-, diffq
-, dora-search
-, hydra-colorlog
-, julius
-, lameenc
-, museval
-, openunmix
-, submitit
-, treetable
+{
+  lib,
+  python3,
+  fetchPypi,
+  diffq,
+  dora-search,
+  hydra-colorlog,
+  julius,
+  lameenc,
+  museval,
+  openunmix,
+  submitit,
+  treetable,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -22,7 +23,7 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-5FpaeIuueXZ8N7v25pquA4Yt3MoFVQ+3m5JjRqF31xM=";
   };
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     diffq
     dora-search
     einops

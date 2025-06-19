@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -13,14 +14,16 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-KclbeXqOz/S7iUy3sQPjmnjJBat4qIqaJH3jDId0Oi8=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
   ];
 
-  nativeCheckInputs = with python3.pkgs; [
-    unittestCheckHook
-  ];
+  checkPhase = ''
+    echo "Running tests..."
+    python test.py
+    echo "Tests completed successfully."
+  '';
 
   pythonImportsCheck = [ "treetable" ];
 

@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -17,12 +18,12 @@ python3.pkgs.buildPythonPackage rec {
     substituteInPlace pyproject.toml --replace-fail "packaging~=23.1" "packaging>=23.1"
   '';
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     setuptools-scm
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     importlib-metadata
     packaging
   ];

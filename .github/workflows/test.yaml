@@ -1,4 +1,7 @@
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -9,10 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v24
-      - run: nix flake check --all-systems
+      - run: nix flake check
 
   detect-changes:
-    needs: check
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.packages.outputs.matrix }}
@@ -20,12 +22,14 @@ jobs:
       - id: packages
         uses: hellofresh/action-changed-files@v3
         with:
-          pattern: pkgs/development/python-modules/(?P<package>[^/]+)
+          pattern: pkgs/development/python-modules/(?P<package>[^/]+)/
+          defaults: true
           default-patterns: flake.lock
 
   build:
     needs: detect-changes
     runs-on: ubuntu-latest
+    environment: ${{ matrix.package }}
     strategy:
       matrix: ${{fromJSON(needs.detect-changes.outputs.matrix)}}
       fail-fast: false

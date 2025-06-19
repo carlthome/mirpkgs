@@ -1,7 +1,8 @@
-{ lib
-, python3
-, fetchPypi
-, read-version
+{
+  lib,
+  python3,
+  fetchPypi,
+  read-version,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -14,13 +15,14 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-1E+FAI+r0kSMfjtJbDG0TXYQVg9v/3TzZzr6qUmHCJk=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     read-version
     setuptools
     wheel
+    decorator
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     colorlog
     hydra-core
   ];

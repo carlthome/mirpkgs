@@ -1,6 +1,7 @@
-{ lib
-, python3
-, fetchPypi
+{
+  lib,
+  python3,
+  fetchPypi,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -13,11 +14,11 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-J2aGjnFlax4nikLzO87XT66/LFJdunT0zEO+jL72xYg=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.flit-core
+  build-system = with python3.pkgs; [
+    flit-core
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     cloudpickle
     typing-extensions
   ];

@@ -1,8 +1,9 @@
-{ lib
-, python3
-, fetchPypi
-, treetable
-, submitit
+{
+  lib,
+  python3,
+  fetchPypi,
+  treetable,
+  submitit,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -16,7 +17,7 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-KVb9LEx+S5pIMOg/DUz5Yb5Fz7oaLwVwKB6R0VrFFvs=";
   };
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     hydra-core
     pytorch-lightning
     retrying

@@ -1,26 +1,27 @@
-{ lib
-, python3
-, fetchPypi
-, ffmpeg
+{
+  lib,
+  python3,
+  fetchPypi,
+  ffmpeg,
 }:
 
 python3.pkgs.buildPythonPackage rec {
   pname = "stempeg";
-  version = "0.2.3";
+  version = "0.2.4";
   pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-hAu4JFBNcTM22mqJ1ieQ97oXKgmdyW+KK7XTIUjRqWo=";
+    hash = "sha256-5YcAcYfwUhXlDZKmk/LKDYSu9vRa5iEvhdWoRV97K7E=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
     ffmpeg
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     ffmpeg-python
     ffmpeg
     numpy
