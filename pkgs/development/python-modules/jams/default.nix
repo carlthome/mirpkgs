@@ -6,12 +6,12 @@
 
 python3.pkgs.buildPythonPackage rec {
   pname = "jams";
-  version = "0.3.4";
+  version = "0.3.5";
   pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-i7IVi9GbTwV7i5AyG0Sx3RZZxmy+vg1CGYidMdf4iLk=";
+    hash = "sha256-JgsZIvD6wLMNgvdQ4LHSQJBQcNtOUAtS76jzICQJ0P4=";
   };
 
   nativeBuildInputs = with python3.pkgs; [
@@ -29,10 +29,6 @@ python3.pkgs.buildPythonPackage rec {
 
   checkInputs = with python3.pkgs; [
     pytest-cov
-  ];
-
-  patches = [
-    ./python312.patch
   ];
 
   pythonImportsCheck = [ "jams" ];
