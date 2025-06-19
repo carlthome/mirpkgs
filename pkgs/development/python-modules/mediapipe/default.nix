@@ -1,7 +1,8 @@
-{ lib
-, python3
-, fetchFromGitHub
-, opencv-contrib-python
+{
+  lib,
+  python3,
+  fetchFromGitHub,
+  opencv-contrib-python,
 }:
 
 python3.pkgs.buildPythonApplication rec {

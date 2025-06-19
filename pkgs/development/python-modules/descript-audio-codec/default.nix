@@ -1,8 +1,9 @@
-{ lib
-, python3
-, fetchPypi
-, argbind
-, descript-audiotools
+{
+  lib,
+  python3,
+  fetchPypi,
+  argbind,
+  descript-audiotools,
 }:
 
 python3.pkgs.buildPythonApplication rec {

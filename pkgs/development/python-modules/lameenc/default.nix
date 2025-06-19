@@ -7,7 +7,7 @@
 
 let
   lameStatic = lame.overrideAttrs (old: {
-    configureFlags = (old.configureFlags or []) ++ [
+    configureFlags = (old.configureFlags or [ ]) ++ [
       "--enable-static"
       "--disable-shared"
     ];

@@ -1,19 +1,20 @@
-{ lib
-, python3
-, fetchPypi
-, aeiou
-, prefigure
-, pedalboard
-, alias-free-torch
-, auraloss
-, descript-audio-codec
-, einops-exts
-, ema-pytorch
-, laion-clap
-, local-attention
-, v-diffusion-pytorch
-, vector-quantize-pytorch
-, x-transformers
+{
+  lib,
+  python3,
+  fetchPypi,
+  aeiou,
+  prefigure,
+  pedalboard,
+  alias-free-torch,
+  auraloss,
+  descript-audio-codec,
+  einops-exts,
+  ema-pytorch,
+  laion-clap,
+  local-attention,
+  v-diffusion-pytorch,
+  vector-quantize-pytorch,
+  x-transformers,
 }:
 
 python3.pkgs.buildPythonApplication rec {

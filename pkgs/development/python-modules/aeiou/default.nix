@@ -1,7 +1,8 @@
-{ lib
-, python3
-, fetchPypi
-, pedalboard
+{
+  lib,
+  python3,
+  fetchPypi,
+  pedalboard,
 }:
 
 python3.pkgs.buildPythonApplication rec {

@@ -1,9 +1,10 @@
-{ lib
-, python3
-, fetchPypi
-, mediapipe
-, soundcloud-lib
-, ...
+{
+  lib,
+  python3,
+  fetchPypi,
+  mediapipe,
+  soundcloud-lib,
+  ...
 }:
 
 python3.pkgs.buildPythonApplication rec {

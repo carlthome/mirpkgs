@@ -1,7 +1,8 @@
-{ lib
-, python3
-, fetchFromGitHub
-, ffmpeg
+{
+  lib,
+  python3,
+  fetchFromGitHub,
+  ffmpeg,
 }:
 
 python3.pkgs.buildPythonPackage rec {

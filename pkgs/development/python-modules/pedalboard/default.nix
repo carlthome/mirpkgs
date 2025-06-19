@@ -51,7 +51,9 @@ python3.pkgs.buildPythonPackage rec {
     pcre
   ];
 
-  dependencies =with python3.pkgs;    [
+  dependencies =
+    with python3.pkgs;
+    [
       numpy
       setuptools
       wheel

@@ -1,7 +1,8 @@
-{ lib
-, python3
-, fetchPypi
-, dora-search
+{
+  lib,
+  python3,
+  fetchPypi,
+  dora-search,
 }:
 
 python3.pkgs.buildPythonApplication rec {
