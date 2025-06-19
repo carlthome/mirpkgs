@@ -3,24 +3,28 @@
   python3,
   fetchFromGitHub,
   ffmpeg,
+  pytest-runner,
 }:
 
 python3.pkgs.buildPythonPackage rec {
   pname = "madmom";
   version = "0.16.1.dev0";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "CPJKU";
     repo = "madmom";
-    rev = "0551aa8f48d71a367d92b5d3a347a0cf7cd97cc9";
-    hash = "sha256-ELmv6w4UWtbpMoSnji+HcBptky+zEylpBLMsLaDt/fw=";
+    rev = "27f032e8947204902c675e5e341a3faf5dc86dae";
+    hash = "sha256-gJb+p35rYHOrYkIbz2rCoFxr6OttSrIBQwv+3Gfxh7Y=";
     fetchSubmodules = true;
   };
 
   build-system = with python3.pkgs; [
+    setuptools
     wheel
     cython
+    pytest-runner
+    oldest-supported-numpy
   ];
 
   dependencies = with python3.pkgs; [
@@ -30,8 +34,7 @@ python3.pkgs.buildPythonPackage rec {
     scipy
     # TODO Add pyfftw for improved FFT performance.
     #pyfftw
-    # TODO Add pyaudio for real-time audio I/O.
-    #pyaudio
+    pyaudio
   ];
 
   # Remove source files so pytest only uses the built package.
