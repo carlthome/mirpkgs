@@ -16,7 +16,7 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-6m4ZL5QERnToMzNuofQVMY3fKOMgMCrHsQnt/w1FNL0=";
   };
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     six
     numpy
     mido

@@ -21,7 +21,7 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-Ar0FsMb5S9lvzBLUHf13d8SXWPSSkQRxnUnSzPiu/MU=";
   };
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     attrs
     black
     chardet

@@ -14,12 +14,12 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-qY9RyufVQo9vNGqLa8B4p8orX2H+uiJy65Gbe36fDe4=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    setuptools
+    wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     braceexpand
     ftfy
     h5py

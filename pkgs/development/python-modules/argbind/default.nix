@@ -13,12 +13,12 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-GxWcBK9WhYqR1Zx6R7yeo52Wrfzh1/z6OAUNesmBV0U=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    setuptools
+    wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     docstring-parser
     pyyaml
   ];

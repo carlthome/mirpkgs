@@ -16,7 +16,7 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-GA4bbAYOmo7LX/l3ddyFTA9FWybgforLVBGIL1HT2Gg=";
   };
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     av
     demucs
     einops

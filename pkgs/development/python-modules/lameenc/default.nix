@@ -19,14 +19,14 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-+EnJ4v6Ol5tnFKpFCx8w1Bhu5NsaIK1OX/sjEhnMHL8=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
     cmake
     pipInstallHook
   ];
 
-  propagatedBuildInputs = [ lame ];
+  dependencies = [ lame ];
 
   cmakeFlags = [
     "-DCMAKE_OSX_ARCHITECTURES=${stdenv.hostPlatform.darwinArch}"

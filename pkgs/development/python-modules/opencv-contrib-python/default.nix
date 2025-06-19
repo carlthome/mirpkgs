@@ -18,15 +18,15 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-/xwAsG4sP0rUfeZPqcUn1n98b86T9RO2QWPUG+p8QbI=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.cmake
-    python3.pkgs.numpy
-    python3.pkgs.pip
-    python3.pkgs.scikit-build
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    cmake
+    numpy
+    pip
+    scikit-build
+    setuptools
+    wheel
 
-    #python3.pkgs.opencv4
+    #opencv4
     #opencl-headers
     #ninja
     #lapack
@@ -45,7 +45,7 @@ python3.pkgs.buildPythonApplication rec {
     substituteInPlace pyproject.toml --replace-fail "==" ">="
   '';
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     numpy
   ];
 

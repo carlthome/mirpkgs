@@ -15,11 +15,11 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-1PA581EiRkkgcc5w6fWQF8atZMz5+JRGY/02qcgWe3A=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     yt-dlp
     numpy
   ];

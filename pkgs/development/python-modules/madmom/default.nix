@@ -17,12 +17,12 @@ python3.pkgs.buildPythonPackage rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     wheel
     cython
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     ffmpeg
     mido
     numpy

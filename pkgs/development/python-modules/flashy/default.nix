@@ -14,12 +14,12 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-5/WvwxMNWvXdvOHSL0pynxkABVSIywtTHNvBkNx56f0=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     colorlog
     dora-search
     numpy

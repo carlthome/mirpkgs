@@ -16,13 +16,13 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-JNIUDIWV/RcWdKWu1A+DfJiAoEQ9guGm26qZ8mv2CG4=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
     ffmpeg
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     jsonschema
     musdb
     ffmpeg

@@ -13,15 +13,15 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-hRadbn45zTntMGjr99VKGm+oZZWSA7UL1oKQdL40bmQ=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    setuptools
+    wheel
   ];
 
-  propagatedBuildInputs = [
-    python3.pkgs.mutagen
-    python3.pkgs.beautifulsoup4
-    python3.pkgs.aiohttp
+  dependencies = with python3.pkgs; [
+    mutagen
+    beautifulsoup4
+    aiohttp
   ];
 
   pythonImportsCheck = [ "soundcloud_lib" ];

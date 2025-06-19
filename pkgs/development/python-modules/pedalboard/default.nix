@@ -43,7 +43,7 @@ python3.pkgs.buildPythonPackage rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
     pybind11
@@ -51,9 +51,7 @@ python3.pkgs.buildPythonPackage rec {
     pcre
   ];
 
-  propagatedBuildInputs =
-    with python3.pkgs;
-    [
+  dependencies =with python3.pkgs;    [
       numpy
       setuptools
       wheel

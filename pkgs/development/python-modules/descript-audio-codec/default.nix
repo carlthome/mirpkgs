@@ -15,12 +15,12 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-VqWlQRKGhoIVcHVlEtQFU06depeLNK3yUQz+mB8LAOA=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    setuptools
+    wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     argbind
     descript-audiotools
     einops

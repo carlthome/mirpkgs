@@ -14,9 +14,9 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-e6CZ5weKq8TT03FpL4J9rmZ8Bzrui/Cx2LgwP33TZdM=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    setuptools
+    wheel
   ];
 
   pythonImportsCheck = [ "alias_free_torch" ];

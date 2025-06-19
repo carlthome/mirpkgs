@@ -19,10 +19,10 @@ python3.pkgs.buildPythonApplication rec {
     rm pyproject.toml
   '';
 
-  build-system = [
-    python3.pkgs.attrs
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    attrs
+    setuptools
+    wheel
   ];
 
   dependencies = with python3.pkgs; [

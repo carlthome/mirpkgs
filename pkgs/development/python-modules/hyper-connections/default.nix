@@ -15,8 +15,8 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-02+eqIA+guFPIzCFZTZg6tUhF8oXhxhr0P2xlwtlzhw=";
   };
 
-  build-system = [
-    python3.pkgs.hatchling
+  build-system = with python3.pkgs; [
+    hatchling
   ];
 
   dependencies = with python3.pkgs; [

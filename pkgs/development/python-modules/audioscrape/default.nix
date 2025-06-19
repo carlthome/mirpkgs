@@ -16,13 +16,13 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-O97DAYgN0Cg76e4y5dpNPbShQM0ZjBKYdWxW4mDkU64=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.setuptools-scm
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    setuptools
+    setuptools-scm
+    wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     mediapipe
     requests
     soundcloud-lib

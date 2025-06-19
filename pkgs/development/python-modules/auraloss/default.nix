@@ -13,13 +13,13 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-hus7zoGq9XnZ4t9ZsMrnq43nk5AsNEr3LyVdU8PVyVQ=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.attrs
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    attrs
+    setuptools
+    wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     numpy
     torch
   ];

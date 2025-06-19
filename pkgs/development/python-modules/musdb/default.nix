@@ -16,14 +16,14 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-bbTV5L8myZgqk4esYX+uf8gYLASF/Em0Q3JxI96L4FM=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
     ffmpeg
     pytest
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     numpy
     pyaml
     stempeg

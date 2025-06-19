@@ -15,11 +15,11 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-fH//6eoVZ46QT6JlyhTlAtQ9AujyWEuZFg4+FoD7n9Q=";
   };
 
-  nativeBuildInputs = [
-    python3.pkgs.hatchling
+  build-system = with python3.pkgs; [
+    hatchling
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     einops
     einx
     torch

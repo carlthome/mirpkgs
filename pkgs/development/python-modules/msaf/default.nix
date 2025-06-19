@@ -18,12 +18,12 @@ python3.pkgs.buildPythonPackage {
     hash = "sha256-azib8QRg0cf5q4E4DzeuytgH1PEoQEp1fY31NzPzefY=";
   };
 
-  nativeBuildInputs = with python3.pkgs; [
+  build-system = with python3.pkgs; [
     setuptools
     wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     audioread
     cvxopt
     decorator

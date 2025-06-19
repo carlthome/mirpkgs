@@ -13,18 +13,18 @@ python3.pkgs.buildPythonApplication rec {
     inherit pname version;
     hash = "sha256-yMHLsCOTuQQtNjCbYyMGHIAXgUW0HUL1/jooB3MiGac=";
   };
-  
+
   patches = [
     # This is part of the standard library and shoudl not be mentioned in setup.py
     ./remove-argparse.patch
   ];
 
-  nativeBuildInputs = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    setuptools
+    wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  dependencies = with python3.pkgs; [
     configparser
     gin-config
     gradio

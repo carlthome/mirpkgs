@@ -17,9 +17,9 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-vyRFPR6iUe0HWjpMc05bYI5J6cSJ+bhn2luVUDjSwGM=";
   };
 
-  build-system = [
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
+  build-system = with python3.pkgs; [
+    setuptools
+    wheel
     pytest-runner
   ];
 
