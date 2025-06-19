@@ -14,6 +14,11 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-hus7zoGq9XnZ4t9ZsMrnq43nk5AsNEr3LyVdU8PVyVQ=";
   };
 
+  # Rely on setup.py as the pyproject.toml is incomplete.
+  configurePhase = ''
+    rm pyproject.toml
+  '';
+
   build-system = with python3.pkgs; [
     attrs
     setuptools
