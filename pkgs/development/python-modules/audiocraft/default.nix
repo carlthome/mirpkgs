@@ -39,6 +39,7 @@ python3.pkgs.buildPythonPackage rec {
     torchmetrics
     tqdm
     xformers
+    transformers
   ];
 
   pythonImportsCheck = [ "audiocraft" ];
