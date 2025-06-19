@@ -20,6 +20,10 @@ python3.pkgs.buildPythonApplication rec {
     wheel
   ];
 
+  dependencies = with python3.pkgs; [
+    torch
+  ];
+
   pythonImportsCheck = [ "alias_free_torch" ];
 
   meta = with lib; {
