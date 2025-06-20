@@ -24,6 +24,7 @@ let
       rev = "ddaa09110392a4419fecbb6d3022bede89b7e841";
       hash = "sha256-XXG5BHLjYHFX4SE+GR0p+4p3lpvQZVRyUv080eRmvtA=";
     };
+    patches = [];
   });
 in
 python3.pkgs.buildPythonPackage rec {
