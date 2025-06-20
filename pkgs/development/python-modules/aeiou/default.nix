@@ -15,6 +15,12 @@ python3.pkgs.buildPythonApplication rec {
     hash = "sha256-nGHJ3wOHfXhQkTdc+DsB1F2VPk+kZuuhpiUpAaUBC00=";
   };
 
+  postPatch = ''
+    substituteInPlace settings.ini \
+      --replace-fail 'soundfile<=0.10.2' 'soundfile' \
+      --replace-fail 'librosa>=0.8.1' 'librosa' \
+    '';
+
   build-system = with python3.pkgs; [
     setuptools
     wheel
