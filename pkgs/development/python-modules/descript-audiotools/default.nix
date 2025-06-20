@@ -1,22 +1,25 @@
 {
   lib,
   python3,
-  fetchPypi,
+  fetchFromGitHub,
   argbind,
   pyloudnorm,
   pystoi,
   randomname,
   torch-stoi,
+
 }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "descript-audiotools";
-  version = "0.7.2";
+  version = "0.7.4";
   pyproject = true;
 
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-LN02MCXHcbisxT1e+ex340+S4YInLEvn/QEYqZtqXio=";
+  src = fetchFromGitHub {
+    owner = "descriptinc";
+    repo = "audiotools";
+    rev = version;
+    hash = "sha256-mDReVnVgxb+qcTosUSNG3jp6QhaIWdcddyfK4xuyxCc=";
   };
 
   build-system = with python3.pkgs; [
@@ -70,8 +73,13 @@ python3.pkgs.buildPythonApplication rec {
     ];
   };
 
+  postPatch = ''
+    substituteInPlace setup.py \
+      --replace-fail 'protobuf >= 3.19.6, != 4.24.0, < 5.0.0' 'protobuf >=3.19.6' \
+  '';
+
   pythonImportsCheck = [
-    "descript_audiotools"
+    "audiotools"
   ];
 
   meta = {
