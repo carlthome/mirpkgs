@@ -6,18 +6,26 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "laion-clap";
-  version = "1.1.6";
+  version = "1.1.7";
   pyproject = true;
 
   src = fetchPypi {
     pname = "laion_clap";
     inherit version;
-    hash = "sha256-qY9RyufVQo9vNGqLa8B4p8orX2H+uiJy65Gbe36fDe4=";
+    hash = "sha256-mrnFI2ueCUT2fWaF7yqcFIFOvRPA2GLH/gepu1ZgQ5c=";
   };
+
+  patches = [
+    ./defer-download.patch
+  ];
+
+  postPatch = ''
+    substituteInPlace pyproject.toml \
+      --replace-fail 'numpy >= 1.23.5, < 2.0.0' 'numpy >= 1.23.5'
+  '';
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -33,7 +41,10 @@ python3.pkgs.buildPythonApplication rec {
     scikit-learn
     scipy
     soundfile
+    torch
+    torchaudio
     torchlibrosa
+    torchvision
     tqdm
     transformers
     wandb
@@ -43,11 +54,11 @@ python3.pkgs.buildPythonApplication rec {
 
   pythonImportsCheck = [ "laion_clap" ];
 
-  meta = with lib; {
+  meta = {
     description = "Contrastive Language-Audio Pretraining Model from LAION";
     homepage = "https://pypi.org/project/laion-clap/";
-    license = licenses.cc0;
-    maintainers = with maintainers; [ ];
+    license = lib.licenses.cc0;
+    maintainers = with lib.maintainers; [ ];
     mainProgram = "laion-clap";
   };
 }
