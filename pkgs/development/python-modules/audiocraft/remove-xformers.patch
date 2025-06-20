@@ -1,0 +1,32 @@
+diff --git a/audiocraft/modules/transformer.py b/audiocraft/modules/transformer.py
+index 048c06d..74b81a0 100644
+--- a/audiocraft/modules/transformer.py
++++ b/audiocraft/modules/transformer.py
+@@ -20,7 +20,12 @@ import torch
+ import torch.nn as nn
+ from torch.nn import functional as F
+ from torch.utils.checkpoint import checkpoint as torch_checkpoint
+-from xformers import ops
++
++try:
++    from xformers import ops
++except ImportError:
++    print("xformers not installed, using regular torch.")
++    ops = torch
+ 
+ from .rope import RotaryEmbedding
+ from .streaming import StreamingModule
+@@ -187,6 +192,13 @@ class StreamingMultiheadAttention(StreamingModule):
+             assert not causal, "Causal cannot work with cross attention."
+             assert rope is None, "Rope cannot work with cross attention."
+ 
++        try:
++            import xformers
++        except ImportError:
++            print("xformers not installed, using regular torch.")
++            memory_efficient = False
++            self.memory_efficient = False
++
+         if memory_efficient:
+             _verify_xformers_memory_efficient_compat()
+ 

@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   python3,
   fetchPypi,
@@ -17,6 +18,16 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-GA4bbAYOmo7LX/l3ddyFTA9FWybgforLVBGIL1HT2Gg=";
   };
 
+  postPatch = ''
+    substituteInPlace requirements.txt \
+      --replace-fail 'xformers' ' ' \
+      --replace-fail 'spacy==3.5.2' 'spacy' \
+  '';
+
+  patches = lib.optionals pkgs.stdenv.isDarwin [
+    ./remove-xformers.patch
+  ];
+
   dependencies = with python3.pkgs; [
     av
     demucs
@@ -27,7 +38,7 @@ python3.pkgs.buildPythonPackage rec {
     huggingface-hub
     hydra-colorlog
     hydra-core
-    julius
+    #julius
     librosa
     num2words
     numpy
@@ -38,8 +49,9 @@ python3.pkgs.buildPythonPackage rec {
     torchaudio
     torchmetrics
     tqdm
-    xformers
     transformers
+  ] ++ lib.optionals pkgs.stdenv.isLinux [
+    xformers
   ];
 
   pythonImportsCheck = [ "audiocraft" ];
