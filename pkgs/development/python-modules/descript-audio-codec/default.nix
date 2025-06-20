@@ -49,7 +49,7 @@ python3.pkgs.buildPythonApplication rec {
     ];
   };
 
-  pythonImportsCheck = [ "descript_audio_codec" ];
+  pythonImportsCheck = [ "dac" ];
 
   meta = with lib; {
     description = "A high-quality general neural audio codec";
