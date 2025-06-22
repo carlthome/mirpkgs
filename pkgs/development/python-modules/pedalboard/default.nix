@@ -11,7 +11,6 @@
   python3,
   fetchgit,
   libcxx,
-  darwin,
 }:
 
 let
@@ -24,8 +23,8 @@ let
       rev = "ddaa09110392a4419fecbb6d3022bede89b7e841";
       hash = "sha256-XXG5BHLjYHFX4SE+GR0p+4p3lpvQZVRyUv080eRmvtA=";
     };
-    nativeInstallCheckInputs = [];
-    patches = [];
+    nativeInstallCheckInputs = [ ];
+    patches = [ ];
   });
 in
 python3.pkgs.buildPythonPackage rec {
@@ -54,31 +53,13 @@ python3.pkgs.buildPythonPackage rec {
     pcre
   ];
 
-  dependencies =
-    with python3.pkgs;
-    [
-      numpy
-      setuptools
-      wheel
-      pybind11
-      juce6
-    ]
-    ++ lib.optionals stdenv.isDarwin (
-      with darwin.apple_sdk.frameworks;
-      [
-        Accelerate
-        AudioToolbox
-        AudioUnit
-        Carbon
-        Cocoa
-        CoreAudio
-        CoreAudioKit
-        CoreServices
-        DiscRecording
-        MetalKit
-        WebKit
-      ]
-    );
+  dependencies = with python3.pkgs; [
+    numpy
+    setuptools
+    wheel
+    pybind11
+    juce6
+  ];
 
   meta = with lib; {
     description = "A Python library for working with audio";
