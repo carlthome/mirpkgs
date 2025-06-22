@@ -19,37 +19,41 @@ python3.pkgs.buildPythonApplication rec {
     substituteInPlace settings.ini \
       --replace-fail 'soundfile<=0.10.2' 'soundfile' \
       --replace-fail 'librosa>=0.8.1' 'librosa' \
-    '';
+  '';
 
   build-system = with python3.pkgs; [
     setuptools
     wheel
   ];
 
-  dependencies = with python3.pkgs; [
-    accelerate
-    bokeh
-    einops
-    fastcore
-    holoviews
-    ipython
-    librosa
-    matplotlib
-    numpy
-    pandas
-    pedalboard
-    pillow
-    plotly
-    scipy
-    soundfile
-    torch
-    torchaudio
-    torchvision
-    tqdm
-    umap-learn
-    wandb
-    webdataset
-  ];
+  dependencies =
+    with python3.pkgs;
+    [
+      accelerate
+      bokeh
+      einops
+      fastcore
+      holoviews
+      ipython
+      librosa
+      matplotlib
+      numpy
+      pandas
+      pedalboard
+      pillow
+      plotly
+      scipy
+      soundfile
+      torch
+      torchaudio
+      torchvision
+      tqdm
+      wandb
+      webdataset
+    ]
+    ++ lib.optionals (pkgs.stdenv.system != "aarch64-linux") [
+      umap-learn
+    ];
 
   passthru.optional-dependencies = with python3.pkgs; {
     dev = [
