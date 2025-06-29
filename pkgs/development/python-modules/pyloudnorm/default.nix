@@ -1,17 +1,19 @@
 {
   lib,
   python3,
-  fetchPypi,
+  fetchFromGitHub,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication {
   pname = "pyloudnorm";
-  version = "0.1.1";
+  version = "0.1.1-dev0";
   pyproject = true;
 
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-Y81OGX3qTneVFg6gjtAtMYCRvOiD5Dam28WWMya3Hh4=";
+  src = fetchFromGitHub {
+    owner = "csteinmetz1";
+    repo = "pyloudnorm";
+    rev = "a741692b186dbb1ca5ae69562d3e4354bc3e761f";
+    hash = "sha256-l+MrDomWsXnI+pxw96bFTjMqeEuT/RLJzbEU0oGtcgg=";
   };
 
   # The project relies on a setup.py so we need to remove the malformed pyproject.toml
@@ -26,7 +28,6 @@ python3.pkgs.buildPythonApplication rec {
   ];
 
   dependencies = with python3.pkgs; [
-    future
     numpy
     scipy
   ];
