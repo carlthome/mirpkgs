@@ -10,7 +10,7 @@
 
 python3.pkgs.buildPythonPackage rec {
   pname = "mirdata";
-  version = "0.3.8";
+  version = "0.3.9";
   format = "setuptools";
 
   # The tests require data files that are not included in the source release, so we take the source from GitHub instead.
@@ -18,7 +18,7 @@ python3.pkgs.buildPythonPackage rec {
     owner = "mir-dataset-loaders";
     repo = pname;
     rev = version;
-    hash = "sha256-Ar0FsMb5S9lvzBLUHf13d8SXWPSSkQRxnUnSzPiu/MU=";
+    hash = "sha256-MRtfhPlBFHjwxeDS890JsvRdAu5yD4aEYBLRvlMMn4g=";
   };
 
   dependencies = with python3.pkgs; [
@@ -77,7 +77,6 @@ python3.pkgs.buildPythonPackage rec {
     tests = [
       coveralls
       decorator
-      future
       pytest
       pytest-cov
       pytest-localserver
