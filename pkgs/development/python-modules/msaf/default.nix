@@ -12,10 +12,10 @@ python3.pkgs.buildPythonPackage {
   pyproject = true;
 
   src = fetchFromGitHub {
-    owner = "urinieto";
+    owner = "carlthome";
     repo = "msaf";
-    rev = "main";
-    hash = "sha256-azib8QRg0cf5q4E4DzeuytgH1PEoQEp1fY31NzPzefY=";
+    rev = "patch-3";
+    hash = "sha256-hvIhIB/Z0rqaXsZoR5fPhYiglLkbwm2yx05PABv8Tos=";
   };
 
   build-system = with python3.pkgs; [
@@ -27,7 +27,6 @@ python3.pkgs.buildPythonPackage {
     audioread
     cvxopt
     decorator
-    future
     jams
     joblib
     librosa

@@ -7,6 +7,5 @@ index 7049ed3..0a2e504 100644
          "cvxopt",
          "decorator",
 -        "enum34",
-         "future",
          "jams >= 0.3.0",
          "joblib",
