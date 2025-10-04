@@ -25,7 +25,9 @@ python3.pkgs.buildPythonApplication rec {
     aiohttp
   ];
 
-  pythonImportsCheck = [ "soundcloud_lib" ];
+  patches = [ ./fix-dependency-name.patch ];
+
+  pythonImportsCheck = [ "sclib" ];
 
   meta = with lib; {
     description = "Python Soundcloud API";
