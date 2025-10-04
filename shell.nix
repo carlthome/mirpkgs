@@ -4,7 +4,9 @@
 }:
 pkgs.mkShell {
   buildInputs = with pkgs; [
-    nixpkgs-fmt
+    nixfmt
     actionlint
+    nix-init
+    nix-update
   ];
 }
