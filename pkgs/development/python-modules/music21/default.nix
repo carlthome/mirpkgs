@@ -6,12 +6,12 @@
 
 python3.pkgs.buildPythonPackage rec {
   pname = "music21";
-  version = "9.1.0";
+  version = "9.7.1";
   format = "pyproject";
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-bGFCXHr1v1ThIK/rq8/9sivjJiCw6iKw2ONqxer678g=";
+    hash = "sha256-sFbMQfuYn0kuKRiCwTwC68E+j1c0xqq5rrn+bP0sJVA=";
   };
 
   build-system = with python3.pkgs; [
@@ -27,6 +27,17 @@ python3.pkgs.buildPythonPackage rec {
     numpy
     requests
     webcolors
+  ];
+
+  nativeCheckInputs = with python3.pkgs; [
+    pytestCheckHook
+  ];
+
+  disabledTests = [
+    "music21/scale/test_intervalNetwork.py::Test::testScaleArbitrary"
+    "music21/test/test_chord.py::TestExternal::testBasic"
+    "music21/test/test_chord.py::TestExternal::testPostTonalChords"
+    "music21/test/test_note.py::Test::testComplex"
   ];
 
   pythonImportsCheck = [ "music21" ];
