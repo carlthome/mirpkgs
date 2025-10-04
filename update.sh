@@ -21,4 +21,4 @@ fi
 
 # Update the Nix build definition for the specified package.
 package_name=$1
-nix-update --flake ${package_name}
+nix-update --commit --flake ${package_name}
