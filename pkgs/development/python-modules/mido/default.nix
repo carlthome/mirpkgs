@@ -6,17 +6,13 @@
 
 python3.pkgs.buildPythonPackage rec {
   pname = "mido";
-  version = "1.3.2";
+  version = "1.3.3";
   format = "pyproject";
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-Ouootu1zD3N9WxLaNXjevp3FAFj6Nw/pzt7ZGJtnw0g=";
+    hash = "sha256-GuyzC38oJATxfkN2jL90pqMb8is7eDvdEXoc6dIst0w=";
   };
-
-  postPatch = ''
-    substituteInPlace pyproject.toml --replace-fail "packaging~=23.1" "packaging>=23.1"
-  '';
 
   build-system = with python3.pkgs; [
     setuptools
