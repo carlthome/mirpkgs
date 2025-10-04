@@ -40,6 +40,12 @@ nix flake check
 
 # Build all packages.
 nix build
+
+# Initialize a new Python package build definition.
+./init.sh msaf
+
+# Update a package to the latest version.
+./update.sh msaf
 ```
 
 ## FAQ
