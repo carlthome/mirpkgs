@@ -11,12 +11,12 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "opencv-contrib-python";
-  version = "4.9.0.80";
+  version = "4.12.0.88";
   pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-/xwAsG4sP0rUfeZPqcUn1n98b86T9RO2QWPUG+p8QbI=";
+    hash = "sha256-Dx4igjqs4JBnuaDo4rS6bXoe8IgH1s6+oxXzEz9Bmg4=";
   };
 
   build-system = with python3.pkgs; [
