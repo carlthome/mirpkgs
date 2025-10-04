@@ -6,6 +6,7 @@
   demucs,
   flashy,
   hydra-colorlog,
+  torchtext,
 }:
 
 python3.pkgs.buildPythonPackage rec {
@@ -18,15 +19,13 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-2CrePrT5NO4a20OK5oeiv1nTPKSiADm+qwclSMA4rIA=";
   };
 
-  postPatch = ''
-    substituteInPlace requirements.txt \
-      --replace-fail 'xformers' ' ' \
-      --replace-fail 'spacy==3.5.2' 'spacy' \
-  '';
-
   patches = lib.optionals pkgs.stdenv.isDarwin [
     ./remove-xformers.patch
   ];
+
+  postPatch = ''
+    substituteInPlace requirements.txt --replace-fail 'xformers<0.0.23' ' '
+  '';
 
   dependencies =
     with python3.pkgs;
@@ -40,7 +39,7 @@ python3.pkgs.buildPythonPackage rec {
       huggingface-hub
       hydra-colorlog
       hydra-core
-      #julius
+      julius
       librosa
       num2words
       numpy
@@ -49,6 +48,8 @@ python3.pkgs.buildPythonPackage rec {
       spacy
       torch
       torchaudio
+      torchvision
+      torchtext
       torchmetrics
       tqdm
       transformers
