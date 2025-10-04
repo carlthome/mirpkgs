@@ -16,7 +16,7 @@
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
     in
     {
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
       packages = forAllSystems (system: import ./default.nix (inputs // { inherit system; }));
       devShells = forAllSystems (system: {
         default = import ./shell.nix { pkgs = nixpkgs.legacyPackages.${system}; };
