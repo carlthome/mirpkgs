@@ -10,12 +10,12 @@
 
 python3.pkgs.buildPythonPackage rec {
   pname = "audiocraft";
-  version = "1.0.0";
+  version = "1.3.0";
   pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-GA4bbAYOmo7LX/l3ddyFTA9FWybgforLVBGIL1HT2Gg=";
+    hash = "sha256-2CrePrT5NO4a20OK5oeiv1nTPKSiADm+qwclSMA4rIA=";
   };
 
   postPatch = ''
