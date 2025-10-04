@@ -2,7 +2,7 @@
   description = "Example of using mirpkgs as nixpkgs overlay";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     mirpkgs = {
       url = "github:carlthome/mirpkgs/main";
       inputs.nixpkgs.follows = "nixpkgs";
