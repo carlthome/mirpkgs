@@ -19,13 +19,13 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "stable-audio-tools";
-  version = "0.0.16";
+  version = "0.0.19";
   pyproject = true;
 
   src = fetchPypi {
     pname = "stable_audio_tools";
     inherit version;
-    hash = "sha256-8LsoYqMCiymZez0CSVZe6IlH3LsPa8Ma9aTZna/e86I=";
+    hash = "sha256-Nubr8VsEFchKk3LM88NYsXArOr+GFNOX3uNGiJXkfaU=";
   };
 
   build-system = with python3.pkgs; [
