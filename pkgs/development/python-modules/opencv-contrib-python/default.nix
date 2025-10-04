@@ -44,6 +44,7 @@ python3.pkgs.buildPythonApplication rec {
   # Take latest packages by default.
   postPatch = ''
     substituteInPlace pyproject.toml --replace-fail "==" ">="
+    substituteInPlace pyproject.toml --replace-fail "setuptools<70.0.0;" "setuptools;"
   '';
 
   dependencies = with python3.pkgs; [
