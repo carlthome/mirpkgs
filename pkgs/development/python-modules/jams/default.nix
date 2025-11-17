@@ -24,7 +24,7 @@ python3.pkgs.buildPythonPackage rec {
     jsonschema
     sortedcontainers
     decorator
-    mir_eval
+    mir-eval
   ];
 
   checkInputs = with python3.pkgs; [

@@ -31,7 +31,7 @@ python3.pkgs.buildPythonPackage {
     joblib
     librosa
     matplotlib
-    mir_eval
+    mir-eval
     numpy
     pandas
     scikit-learn
