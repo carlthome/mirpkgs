@@ -52,7 +52,7 @@ python3.pkgs.buildPythonApplication rec {
     tqdm
   ];
 
-  optional-dependencies = with python3.pkgs; {
+  passthru.optional-dependencies = with python3.pkgs; {
     docs = [
       myst-nb
       myst-parser
