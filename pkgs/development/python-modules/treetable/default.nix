@@ -19,6 +19,8 @@ python3.pkgs.buildPythonPackage rec {
     wheel
   ];
 
+  dependencies = [ ];
+
   checkPhase = ''
     echo "Running tests..."
     python test.py
