@@ -27,6 +27,11 @@ python3.pkgs.buildPythonPackage rec {
     substituteInPlace requirements.txt --replace-fail 'xformers<0.0.23' ' '
   '';
 
+  build-system = with python3.pkgs; [
+    setuptools
+    wheel
+  ];
+
   dependencies =
     with python3.pkgs;
     [
