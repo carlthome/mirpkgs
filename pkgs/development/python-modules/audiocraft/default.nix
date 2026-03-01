@@ -44,6 +44,10 @@ from transformers.models.t5.tokenization_t5 import T5Tokenizer  # type: ignore'
       --replace-fail \
         'from transformers import EncodecModel as HFEncodecModel' \
         'from transformers.models.encodec.modeling_encodec import EncodecModel as HFEncodecModel'
+    substituteInPlace audiocraft/metrics/clap_consistency.py \
+      --replace-fail \
+        'from transformers import RobertaTokenizer  # type: ignore' \
+        'from transformers.models.roberta.tokenization_roberta import RobertaTokenizer  # type: ignore'
   '';
 
   build-system = with python3.pkgs; [

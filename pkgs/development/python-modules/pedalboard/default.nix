@@ -4,6 +4,7 @@
   autoPatchelfHook,
   python3,
   fetchurl,
+  zlib,
 }:
 
 let
@@ -36,7 +37,10 @@ python3.pkgs.buildPythonPackage rec {
 
   nativeBuildInputs = lib.optionals stdenv.isLinux [ autoPatchelfHook ];
 
-  buildInputs = lib.optionals stdenv.isLinux [ stdenv.cc.cc.lib ];
+  buildInputs = lib.optionals stdenv.isLinux [
+    stdenv.cc.cc.lib
+    zlib
+  ];
 
   dependencies = with python3.pkgs; [
     numpy
