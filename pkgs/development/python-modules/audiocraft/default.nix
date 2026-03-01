@@ -28,6 +28,8 @@ python3.pkgs.buildPythonPackage rec {
     # instead of using the cached metadata with strict version pinning.
     rm -rf audiocraft.egg-info
 
+    # Patch both requirements.txt and PKG-INFO (used by setuptools to generate
+    # wheel METADATA) to remove strict version pins that conflict with nixpkgs.
     sed -i \
       -e 's/torch==2\.1\.0/torch/g' \
       -e 's/torchaudio>=2\.0\.0,<2\.1\.2/torchaudio/g' \
@@ -35,7 +37,7 @@ python3.pkgs.buildPythonPackage rec {
       -e 's/torchtext==0\.16\.0/torchtext/g' \
       -e 's/av==11\.0\.0/av/g' \
       -e 's/xformers<0\.0\.23/xformers/g' \
-      requirements.txt
+      requirements.txt PKG-INFO
 
     # Fix transformers 5.x incompatibility: top-level exports removed
     substituteInPlace audiocraft/modules/conditioners.py \
