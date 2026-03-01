@@ -92,6 +92,11 @@ from transformers.models.t5.tokenization_t5 import T5Tokenizer  # type: ignore'
       xformers
     ];
 
+  # Skip version constraint check: requirements.txt pins are relaxed in
+  # postPatch but pythonRuntimeDepsCheckHook may still read stale constraints
+  # from PKG-INFO or egg-info metadata in the source distribution.
+  dontCheckRuntimeDeps = true;
+
   pythonImportsCheck = [ "audiocraft" ];
 
   meta = with lib; {
