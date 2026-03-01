@@ -24,6 +24,7 @@ python3.pkgs.buildPythonPackage rec {
   dependencies = with python3.pkgs; [
     absl-py
     flatbuffers
+    matplotlib
     numpy
     opencv-contrib-python
     sounddevice
