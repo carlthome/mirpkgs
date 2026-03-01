@@ -24,6 +24,10 @@ python3.pkgs.buildPythonPackage rec {
   ];
 
   postPatch = ''
+    # Remove stale egg-info so setuptools re-reads the patched requirements.txt
+    # instead of using the cached metadata with strict version pinning.
+    rm -rf audiocraft.egg-info
+
     sed -i \
       -e 's/torch==2\.1\.0/torch/g' \
       -e 's/torchaudio>=2\.0\.0,<2\.1\.2/torchaudio/g' \
