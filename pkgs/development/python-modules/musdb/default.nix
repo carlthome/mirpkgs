@@ -21,6 +21,8 @@ python3.pkgs.buildPythonPackage rec {
     wheel
   ];
 
+  nativeBuildInputs = [ ffmpeg ];
+
   dependencies = with python3.pkgs; [
     numpy
     pyaml

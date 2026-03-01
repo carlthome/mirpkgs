@@ -23,11 +23,6 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-5FpaeIuueXZ8N7v25pquA4Yt3MoFVQ+3m5JjRqF31xM=";
   };
 
-  build-system = with python3.pkgs; [
-    setuptools
-    wheel
-  ];
-
   dependencies = with python3.pkgs; [
     diffq
     dora-search
