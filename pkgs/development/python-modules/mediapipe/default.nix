@@ -1,5 +1,7 @@
 {
   lib,
+  stdenv,
+  autoPatchelfHook,
   python3,
   fetchurl,
   opencv-contrib-python,
@@ -14,6 +16,10 @@ python3.pkgs.buildPythonPackage rec {
     url = "https://files.pythonhosted.org/packages/e3/98/00cd8b2dcb563f2298655633e6611a791b2c1a7df1dae064b2b96084f1bf/mediapipe-0.10.32-py3-none-manylinux_2_28_x86_64.whl";
     hash = "sha256-SwlB+7vOQYYvE8sYUMSHjBPbxizV6B50iABRt6IM47Y=";
   };
+
+  nativeBuildInputs = [ autoPatchelfHook ];
+
+  buildInputs = [ stdenv.cc.cc.lib ];
 
   dependencies = with python3.pkgs; [
     absl-py
