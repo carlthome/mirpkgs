@@ -32,6 +32,18 @@ python3.pkgs.buildPythonPackage rec {
       -e 's/av==11\.0\.0/av/g' \
       -e 's/xformers<0\.0\.23/xformers/g' \
       requirements.txt
+
+    # Fix transformers 5.x incompatibility: top-level exports removed
+    substituteInPlace audiocraft/modules/conditioners.py \
+      --replace-fail \
+        'from transformers import RobertaTokenizer, T5EncoderModel, T5Tokenizer  # type: ignore' \
+        'from transformers.models.roberta.tokenization_roberta import RobertaTokenizer  # type: ignore
+from transformers.models.t5.modeling_t5 import T5EncoderModel  # type: ignore
+from transformers.models.t5.tokenization_t5 import T5Tokenizer  # type: ignore'
+    substituteInPlace audiocraft/models/encodec.py \
+      --replace-fail \
+        'from transformers import EncodecModel as HFEncodecModel' \
+        'from transformers.models.encodec.modeling_encodec import EncodecModel as HFEncodecModel'
   '';
 
   build-system = with python3.pkgs; [
