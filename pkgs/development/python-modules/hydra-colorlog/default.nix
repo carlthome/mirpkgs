@@ -27,7 +27,7 @@ python3.pkgs.buildPythonPackage rec {
     hydra-core
   ];
 
-  pythonImportsCheck = [ "hydra_colorlog" ];
+  pythonImportsCheck = [ "hydra_plugins.hydra_colorlog" ];
 
   meta = with lib; {
     description = "Enables colorlog for Hydra apps";

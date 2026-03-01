@@ -24,7 +24,13 @@ python3.pkgs.buildPythonPackage rec {
   ];
 
   postPatch = ''
-    substituteInPlace requirements.txt --replace-fail 'xformers<0.0.23' ' '
+    substituteInPlace requirements.txt \
+      --replace-fail 'xformers<0.0.23' ' ' \
+      --replace-fail 'torch==2.1.0' 'torch' \
+      --replace-fail 'torchaudio>=2.0.0,<2.1.2' 'torchaudio' \
+      --replace-fail 'torchvision==0.16.0' 'torchvision' \
+      --replace-fail 'torchtext==0.16.0' 'torchtext' \
+      --replace-fail 'av==11.0.0' 'av'
   '';
 
   build-system = with python3.pkgs; [

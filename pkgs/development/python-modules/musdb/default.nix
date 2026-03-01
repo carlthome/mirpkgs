@@ -21,10 +21,6 @@ python3.pkgs.buildPythonPackage rec {
     wheel
   ];
 
-  nativeCheckInputs = with python3.pkgs; [
-    pytest
-  ];
-
   dependencies = with python3.pkgs; [
     numpy
     pyaml

@@ -1,39 +1,26 @@
 {
   lib,
   python3,
-  fetchFromGitHub,
+  fetchurl,
   opencv-contrib-python,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "mediapipe";
-  version = "0.10.11";
-  pyproject = true;
+  version = "0.10.32";
+  format = "wheel";
 
-  src = fetchFromGitHub {
-    owner = "google";
-    repo = "mediapipe";
-    rev = "v${version}";
-    hash = "sha256-+9Io6ta7wzjR6r0jVHPnEvro+he2wBw9nlbdIbcjjpE=";
+  src = fetchurl {
+    url = "https://files.pythonhosted.org/packages/e3/98/00cd8b2dcb563f2298655633e6611a791b2c1a7df1dae064b2b96084f1bf/mediapipe-0.10.32-py3-none-manylinux_2_28_x86_64.whl";
+    hash = "sha256-SwlB+7vOQYYvE8sYUMSHjBPbxizV6B50iABRt6IM47Y=";
   };
-
-  build-system = with python3.pkgs; [
-    setuptools
-    wheel
-  ];
 
   dependencies = with python3.pkgs; [
     absl-py
-    attrs
     flatbuffers
-    jax
-    jaxlib-bin
-    matplotlib
     numpy
     opencv-contrib-python
-    protobuf
     sounddevice
-    torch
   ];
 
   pythonImportsCheck = [ "mediapipe" ];
@@ -43,6 +30,7 @@ python3.pkgs.buildPythonApplication rec {
     homepage = "https://github.com/google/mediapipe";
     license = licenses.asl20;
     maintainers = with maintainers; [ ];
+    platforms = [ "x86_64-linux" ];
     mainProgram = "mediapipe";
   };
 }
