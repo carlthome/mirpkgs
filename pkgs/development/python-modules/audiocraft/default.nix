@@ -19,7 +19,11 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-2CrePrT5NO4a20OK5oeiv1nTPKSiADm+qwclSMA4rIA=";
   };
 
-  patches = lib.optionals pkgs.stdenv.isDarwin [
+  # xformers is optional: the patch makes the import graceful so the package
+  # works without it. On Linux xformers can still be added as an overlay if
+  # desired, but we don't require it since its C++ build is slow and often
+  # unavailable in CI binary caches.
+  patches = [
     ./remove-xformers.patch
   ];
 
@@ -36,7 +40,7 @@ python3.pkgs.buildPythonPackage rec {
       -e 's/torchvision==0\.16\.0/torchvision/g' \
       -e 's/torchtext==0\.16\.0/torchtext/g' \
       -e 's/av==11\.0\.0/av/g' \
-      -e 's/xformers<0\.0\.23/xformers/g' \
+      -e '/xformers/d' \
       requirements.txt PKG-INFO
 
     # Fix transformers 5.x incompatibility: top-level exports removed
@@ -87,9 +91,6 @@ from transformers.models.t5.tokenization_t5 import T5Tokenizer  # type: ignore'
       torchmetrics
       tqdm
       transformers
-    ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
-      xformers
     ];
 
   # Skip version constraint check: requirements.txt pins are relaxed in
