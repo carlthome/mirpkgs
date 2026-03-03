@@ -10,7 +10,7 @@
 
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "descript-audiotools";
   version = "0.7.4";
   pyproject = true;
