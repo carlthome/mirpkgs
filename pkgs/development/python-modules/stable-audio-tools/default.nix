@@ -17,7 +17,7 @@
   x-transformers,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "stable-audio-tools";
   version = "0.0.19";
   pyproject = true;

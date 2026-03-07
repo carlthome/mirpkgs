@@ -6,7 +6,7 @@
   pedalboard,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "aeiou";
   version = "0.0.20";
   pyproject = true;

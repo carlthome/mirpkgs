@@ -5,7 +5,7 @@
   einx,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "vector-quantize-pytorch";
   version = "1.15.6";
   pyproject = true;

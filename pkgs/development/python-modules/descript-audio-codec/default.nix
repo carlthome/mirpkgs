@@ -6,7 +6,7 @@
   descript-audiotools,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "descript-audio-codec";
   version = "1.0.0";
   pyproject = true;

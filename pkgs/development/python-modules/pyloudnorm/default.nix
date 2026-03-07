@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }:
 
-python3.pkgs.buildPythonApplication {
+python3.pkgs.buildPythonPackage {
   pname = "pyloudnorm";
   version = "0.1.1-dev0";
   pyproject = true;
