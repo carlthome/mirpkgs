@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   python3,
   fetchPypi,
   pedalboard,
