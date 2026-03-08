@@ -42,6 +42,10 @@ python3.pkgs.buildPythonPackage rec {
     zlib
   ];
 
+  preFixup = lib.optionalString stdenv.isLinux ''
+    addAutoPatchelfSearchPath "$out"/lib/python*/site-packages/opencv_contrib_python_headless.libs
+  '';
+
   dependencies = with python3.pkgs; [
     numpy
   ];
