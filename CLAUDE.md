@@ -97,9 +97,11 @@ nix flake update --commit-lock-file
 
 After scaffolding, review `pkgs/development/python-modules/<package-name>/default.nix` and:
 - Add inter-package dependencies (packages in this repo) to the function arguments
-- Verify the `meta` block (description, homepage, license, maintainer)
+- Verify the `meta` block (description, homepage, changelog, license, maintainer)
 - Add `pythonImportsCheck`
-- Set `pyproject = true` for modern PEP 517 packages; `format = "setuptools"` otherwise
+- Set `pyproject = true` and populate `build-system` with the required build backends
+- Replace `format = "setuptools"` (deprecated) with `pyproject = true` + `build-system = [ setuptools ]`
+- Replace any `checkInputs` (deprecated) with `nativeCheckInputs` containing `pytestCheckHook`
 
 ### Updating an existing package
 
@@ -124,15 +126,21 @@ All packages live in `pkgs/development/python-modules/<package-name>/default.nix
   some-mirpkg,     # inter-repo dependency declared here
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "package-name";
   version = "x.y.z";
-  pyproject = true;   # or: format = "setuptools";
+  pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-...";
   };
+
+  # Always specify the build backend explicitly when pyproject = true.
+  # Common values: setuptools, hatchling, flit-core, poetry-core, meson-python
+  build-system = with python3.pkgs; [
+    setuptools
+  ];
 
   dependencies = with python3.pkgs; [
     # runtime deps from nixpkgs
@@ -141,9 +149,20 @@ python3.pkgs.buildPythonPackage rec {
     some-mirpkg
   ];
 
+  # Use pytestCheckHook instead of a custom checkPhase.
+  # pytest itself is bundled with pytestCheckHook — do not add it separately.
+  nativeCheckInputs = with python3.pkgs; [
+    pytestCheckHook
+  ];
+
+  # Selectively disable tests that require network, large datasets, or are flaky.
+  disabledTests = [
+    "test_that_requires_network"
+  ];
+
   # Optional: expose extras as passthru for downstream use
   passthru.optional-dependencies = with python3.pkgs; {
-    tests = [ pytest pytest-cov ];
+    tests = [ pytest-cov ];
   };
 
   pythonImportsCheck = [ "package_name" ];
@@ -151,22 +170,62 @@ python3.pkgs.buildPythonPackage rec {
   meta = with lib; {
     description = "One-line description";
     homepage = "https://pypi.org/project/package-name/";
+    # Include changelog when available (especially for GitHub-sourced packages)
+    changelog = "https://github.com/owner/repo/blob/${finalAttrs.src.rev}/CHANGELOG.md";
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})
+```
+
+For CLI tools/applications (packages that install executables as the primary artifact), use `buildPythonApplication` instead of `buildPythonPackage` and add `mainProgram`:
+
+```nix
+python3.pkgs.buildPythonApplication (finalAttrs: {
+  pname = "my-tool";
+  ...
+  meta = with lib; {
+    ...
+    mainProgram = "my-tool";
+  };
+})
 ```
 
 ### Key rules
 
+- **Always** use `pyproject = true` — even for legacy `setup.py` packages (`pyproject = true` falls back to setuptools). Never use `format = "setuptools"` (deprecated).
+- **Always** declare `build-system` explicitly when using `pyproject = true`. Common backends: `setuptools`, `hatchling`, `flit-core`, `poetry-core`, `meson-python`.
 - **Always** include `pythonImportsCheck` to validate the import.
 - **Always** include a `meta` block with `description`, `homepage`, `license`, and `maintainers = with maintainers; [ carlthome ]`.
+- **Always** use `nativeCheckInputs` for test dependencies — **never** `checkInputs` (deprecated since NixOS 23.05). Test-only deps are not propagated to dependents.
+- **Prefer** `pytestCheckHook` over a custom `checkPhase`. It handles `doCheck`/`doInstallCheck` correctly and supports `disabledTests`, `pytestFlagsArray`, etc.
+- **Prefer** the `finalAttrs` pattern (`buildPythonPackage (finalAttrs: { ... })`) to allow self-referencing via `inherit (finalAttrs) pname version` in `src` and `meta.changelog`.
 - Inter-repo package dependencies (packages within this repo) must be listed in the function argument list **and** in `dependencies`.
 - nixpkgs packages are accessed via `python3.pkgs.<name>`.
 - Use `fetchPypi` for PyPI releases; use `fetchFromGitHub` when tests or extra data require the full repository.
-- Use `rec` on `buildPythonPackage` when `src` references `pname` or `version`.
+- When the PyPI distribution name uses underscores (e.g., `stable_audio_tools`) but the package `pname` uses hyphens, pass `pname` explicitly to `fetchPypi`: `fetchPypi { pname = "stable_audio_tools"; inherit version; hash = ...; }`.
+- Use `rec` on `buildPythonPackage` only when not using `finalAttrs` and `src` references `pname` or `version`. Prefer `finalAttrs` for new packages.
 - Patches go in the same directory as `default.nix` and are applied via `patches = [ ./fix-something.patch ]`.
+- Use `lib.optionals pkgs.stdenv.isDarwin [ ... ]` / `lib.optionals pkgs.stdenv.isLinux [ ... ]` for platform-specific dependencies.
 - The `default.nix` module loader auto-discovers packages by scanning subdirectories — no manual registration needed.
+- Add `meta.changelog` when the upstream project maintains one (particularly for GitHub-hosted packages).
+
+### Attribute reference
+
+| Attribute | Purpose |
+|---|---|
+| `pyproject = true` | Enable PEP 517/518 build (always set this) |
+| `build-system` | Build-time Python tools (e.g., `setuptools`, `hatchling`) |
+| `dependencies` | Runtime Python deps (propagated to dependents) |
+| `buildInputs` | Native/C system libraries needed at build or runtime |
+| `nativeBuildInputs` | Build-time-only non-Python executables |
+| `nativeCheckInputs` | Test-only deps (`pytestCheckHook`, etc.) — not propagated |
+| `disabledTests` | List of test names to skip when using `pytestCheckHook` |
+| `pytestFlagsArray` | Extra flags passed to pytest (e.g., `[ "--ignore=tests/slow" ]`) |
+| `passthru.optional-dependencies` | Expose pip extras for downstream use |
+| `pythonImportsCheck` | Module names validated by importing after install |
+| `meta.mainProgram` | Entry point name for `nix run` (use with `buildPythonApplication`) |
+| `meta.changelog` | Link to upstream changelog |
 
 ### Unfree packages
 
@@ -216,19 +275,32 @@ Binary cache: `mirpkgs` (https://mirpkgs.cachix.org). Requires `CACHIX_AUTH_TOKE
 
 ## Testing
 
-Packages validate on `nix build`. Some packages include a `checkPhase` running pytest:
+Packages validate on `nix build`. For packages with a test suite, use `pytestCheckHook` in `nativeCheckInputs`:
 
 ```nix
-checkPhase = ''
-  runHook preCheck
+nativeCheckInputs = with python3.pkgs; [
+  pytestCheckHook
+];
+
+# Skip tests that need network access, large datasets, or are known-flaky:
+disabledTests = [
+  "test_download"
+  "test_requires_gpu"
+];
+
+# Pass additional pytest flags:
+pytestFlagsArray = [ "--ignore=tests/integration" ];
+
+# Set env vars needed by tests:
+preCheck = ''
   export DEFAULT_DATA_HOME=$TEMP
   export NUMBA_CACHE_DIR=$TEMP
-  ${python3.pkgs.pytest}/bin/pytest -n auto tests/
-  runHook postCheck
 '';
 ```
 
-Tests that require network access or large datasets are typically skipped by not enabling `doCheck` or by scoping tests carefully.
+`pytestCheckHook` bundles pytest — do not add `pytest` separately to `nativeCheckInputs`. Tests run in `installCheckPhase` (after install), so the installed package is on the path rather than the source tree.
+
+For packages where running tests is impractical (large data downloads, GPU requirements), omit `nativeCheckInputs` and rely on `pythonImportsCheck` as the minimal smoke test.
 
 ---
 
@@ -238,7 +310,11 @@ Tests that require network access or large datasets are typically skipped by not
 - **Missing inter-repo deps**: If a package depends on another package in this repo, it must be listed in the function argument (not just `dependencies`). The `makeScope`/`newScope` mechanism in `pkgs/development/python-modules/default.nix` wires these up automatically.
 - **Unfree packages**: Building packages that depend on `torch` requires the `config.allowUnfreePredicate` in `default.nix`. This is already configured for known CUDA/torch packages.
 - **Collision errors**: `pythonEnv` is built with `ignoreCollisions = true` because some packages share files. This is expected.
-- **Format**: Use `pyproject = true` for packages using `pyproject.toml`/PEP 517. Use `format = "setuptools"` for legacy `setup.py` packages.
+- **Deprecated `format = "setuptools"`**: Replace with `pyproject = true` + `build-system = [ setuptools ]`. The `format` attribute is no longer recognised in current nixpkgs and will produce an error.
+- **Deprecated `checkInputs`**: Replace with `nativeCheckInputs`. `checkInputs` was removed around NixOS 23.05; using it has no effect and silently omits test dependencies.
+- **Missing `build-system`**: When `pyproject = true`, failing to declare `build-system` means the package will be built with no build backend — typically resulting in a wheel-build error. Always specify the backend (e.g., `setuptools`, `hatchling`, `flit-core`).
+- **PyPI name normalisation**: PyPI distribution names may use underscores while `pname` uses hyphens. Pass the exact PyPI name to `fetchPypi`: `fetchPypi { pname = "my_package"; inherit version; hash = ...; }`.
+- **`buildPythonApplication` vs `buildPythonPackage`**: Use `buildPythonApplication` for packages whose primary artifact is a CLI tool. It produces a non-propagating derivation and pairs with `meta.mainProgram`.
 
 ---
 
