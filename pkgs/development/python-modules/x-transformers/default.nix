@@ -4,14 +4,14 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "x-transformers";
   version = "2.3.12";
   pyproject = true;
 
   src = fetchPypi {
     pname = "x_transformers";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-BJ5Ag7nH3shVED9SExKeyBOJPqeXGiV7js/QlXU/5i4=";
   };
 
@@ -48,4 +48,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with lib.maintainers; [ ];
     mainProgram = "x-transformers";
   };
-}
+})

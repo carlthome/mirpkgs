@@ -5,14 +5,14 @@
   einx,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "vector-quantize-pytorch";
   version = "1.15.6";
   pyproject = true;
 
   src = fetchPypi {
     pname = "vector_quantize_pytorch";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-fH//6eoVZ46QT6JlyhTlAtQ9AujyWEuZFg4+FoD7n9Q=";
   };
 
@@ -26,7 +26,7 @@ python3.pkgs.buildPythonApplication rec {
     torch
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     examples = [
       torchvision
       tqdm
@@ -42,4 +42,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "vector-quantize-pytorch";
   };
-}
+})

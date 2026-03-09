@@ -5,19 +5,18 @@
   dora-search,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "flashy";
   version = "0.0.2";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-5/WvwxMNWvXdvOHSL0pynxkABVSIywtTHNvBkNx56f0=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -39,4 +38,4 @@ python3.pkgs.buildPythonApplication rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

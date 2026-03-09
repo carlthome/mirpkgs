@@ -4,13 +4,13 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "openunmix";
   version = "1.2.1";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-7uMKO6xaSpMfD1Xf3cC1QEjr/zE9obojlHD2sI3vsHc=";
   };
 
@@ -21,7 +21,7 @@ python3.pkgs.buildPythonPackage rec {
     tqdm
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     asteroid = [
       asteroid-filterbanks
     ];
@@ -50,4 +50,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

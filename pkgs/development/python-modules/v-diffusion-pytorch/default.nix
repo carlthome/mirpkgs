@@ -4,13 +4,13 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "v-diffusion-pytorch";
   version = "0.0.2";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-K5oBNHjFgex3i7UhgpvIovGBi9Rcqx+EmDRyjJtYy8k=";
   };
 
@@ -39,4 +39,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with lib.maintainers; [ ];
     mainProgram = "v-diffusion-pytorch";
   };
-}
+})

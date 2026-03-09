@@ -4,13 +4,13 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "mido";
   version = "1.3.3";
   format = "pyproject";
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-GuyzC38oJATxfkN2jL90pqMb8is7eDvdEXoc6dIst0w=";
   };
 
@@ -24,7 +24,7 @@ python3.pkgs.buildPythonPackage rec {
     packaging
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     build-docs = [
       sphinx
       sphinx-rtd-theme
@@ -69,4 +69,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

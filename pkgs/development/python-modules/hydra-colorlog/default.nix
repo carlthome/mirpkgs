@@ -5,20 +5,19 @@
   read-version,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "hydra-colorlog";
   version = "1.2.0";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-1E+FAI+r0kSMfjtJbDG0TXYQVg9v/3TzZzr6qUmHCJk=";
   };
 
   build-system = with python3.pkgs; [
     read-version
     setuptools
-    wheel
     decorator
   ];
 
@@ -35,4 +34,4 @@ python3.pkgs.buildPythonPackage rec {
     license = with licenses; [ mit ];
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

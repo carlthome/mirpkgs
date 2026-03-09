@@ -4,20 +4,19 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "ema-pytorch";
   version = "0.5.2";
   pyproject = true;
 
   src = fetchPypi {
     pname = "ema_pytorch";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-T15IOQtle5hHR7h1L6Wa7+WT3Th4VDh3Xvs4XcUVRwc=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -33,4 +32,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "ema-pytorch";
   };
-}
+})
