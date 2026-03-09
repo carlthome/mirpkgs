@@ -27,7 +27,7 @@ python3.pkgs.buildPythonPackage rec {
     torch
   ];
 
-  optional-dependencies = with python3.pkgs; {
+  passthru.optional-dependencies = with python3.pkgs; {
     examples = [
       lion-pytorch
       tqdm
