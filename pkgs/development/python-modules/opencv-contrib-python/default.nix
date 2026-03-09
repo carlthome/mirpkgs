@@ -1,66 +1,56 @@
 {
   lib,
+  stdenv,
+  autoPatchelfHook,
   python3,
-  fetchPypi,
-  opencl-headers,
-  ninja,
-  lapack,
-  openblas,
-  openjpeg,
+  fetchurl,
+  zlib,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+let
+  wheels = {
+    "x86_64-linux" = {
+      url = "https://files.pythonhosted.org/packages/b3/17/bfe5ccbaa3b15b8af3371137732e69a4563ee1b05a17e6578521c09d2a56/opencv_contrib_python_headless-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl";
+      hash = "sha256-sYPiMiRoydO9nKxLpEsnLYKOwihCOVvPpR3zF2UiTAo=";
+    };
+    "aarch64-linux" = {
+      url = "https://files.pythonhosted.org/packages/93/b4/13f1370c2b8e566f9c9f3658982ecd331c666215e7f379e8b1d7ab52a63d/opencv_contrib_python_headless-4.12.0.88-cp37-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl";
+      hash = "sha256-1goSuRXFWlBGjAE/zYOelBtJzMHze5FLYlQzgsNr+B0=";
+    };
+    "aarch64-darwin" = {
+      url = "https://files.pythonhosted.org/packages/33/3a/edf7380db58557cc29bdcff71862b8100c64adf489517ec7250509df4b72/opencv_contrib_python_headless-4.12.0.88-cp37-abi3-macosx_13_0_arm64.whl";
+      hash = "sha256-oX67kU8wmv5yRHwzuRh/8C8j8Ug/qlwP/eeq3IhxHio=";
+    };
+  };
+in
+
+python3.pkgs.buildPythonPackage rec {
   pname = "opencv-contrib-python";
   version = "4.12.0.88";
-  pyproject = true;
+  format = "wheel";
 
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-Dx4igjqs4JBnuaDo4rS6bXoe8IgH1s6+oxXzEz9Bmg4=";
-  };
+  src = fetchurl (wheels.${stdenv.system} or (throw "unsupported system: ${stdenv.system}"));
 
-  build-system = with python3.pkgs; [
-    cmake
-    numpy
-    pip
-    scikit-build
-    setuptools
-    wheel
+  nativeBuildInputs = lib.optionals stdenv.isLinux [ autoPatchelfHook ];
 
-    #opencv4
-    #opencl-headers
-    #ninja
-    #lapack
-    #openblas
-    #openjpeg
+  buildInputs = lib.optionals stdenv.isLinux [
+    stdenv.cc.cc.lib
+    zlib
   ];
-
-  dontUseCmakeConfigure = true;
-
-  #ENABLE_CONTRIB = 1;
-  #CMAKE_ARGS = "-DCMAKE_VERBOSE_MAKEFILE=ON";
-  #VERBOSE = 1;
-
-  # Take latest packages by default.
-  postPatch = ''
-    substituteInPlace pyproject.toml --replace-fail "==" ">="
-    substituteInPlace pyproject.toml --replace-fail "setuptools<70.0.0;" "setuptools;"
-  '';
 
   dependencies = with python3.pkgs; [
     numpy
   ];
 
-  pythonImportsCheck = [ "opencv_contrib_python" ];
+  pythonImportsCheck = [ "cv2" ];
 
   meta = with lib; {
-    description = "Wrapper package for OpenCV python bindings";
-    homepage = "https://pypi.org/project/opencv-contrib-python/";
+    description = "Wrapper package for OpenCV python bindings (headless)";
+    homepage = "https://pypi.org/project/opencv-contrib-python-headless/";
     license = with licenses; [
       asl20
       mit
     ];
     maintainers = with maintainers; [ carlthome ];
-    mainProgram = "opencv-contrib-python";
   };
 }

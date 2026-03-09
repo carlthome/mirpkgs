@@ -17,9 +17,10 @@ python3.pkgs.buildPythonApplication rec {
   build-system = with python3.pkgs; [
     setuptools
     setuptools-scm
+    wheel
   ];
 
-  optional-dependencies = with python3.pkgs; {
+  passthru.optional-dependencies = with python3.pkgs; {
     docs = [
       jaraco-packaging
       jaraco-tidelift
