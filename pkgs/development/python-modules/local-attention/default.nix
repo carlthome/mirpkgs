@@ -6,7 +6,7 @@
   pytest-runner,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "local-attention";
   version = "1.11.1";
   pyproject = true;

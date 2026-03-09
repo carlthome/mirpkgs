@@ -4,7 +4,7 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "v-diffusion-pytorch";
   version = "0.0.2";
   pyproject = true;

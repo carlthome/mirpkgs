@@ -4,7 +4,7 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "auraloss";
   version = "0.4.0";
   pyproject = true;

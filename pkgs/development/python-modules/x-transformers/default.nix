@@ -4,7 +4,7 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "x-transformers";
   version = "2.3.12";
   pyproject = true;

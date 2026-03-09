@@ -4,7 +4,7 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "torchtext";
   version = "0.6.0";
   pyproject = true;

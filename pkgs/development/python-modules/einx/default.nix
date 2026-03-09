@@ -4,7 +4,7 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "einx";
   version = "0.3.0";
   pyproject = true;
