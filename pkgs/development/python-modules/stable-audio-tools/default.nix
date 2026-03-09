@@ -17,20 +17,19 @@
   x-transformers,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "stable-audio-tools";
   version = "0.0.19";
   pyproject = true;
 
   src = fetchPypi {
     pname = "stable_audio_tools";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-Nubr8VsEFchKk3LM88NYsXArOr+GFNOX3uNGiJXkfaU=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -77,4 +76,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "stable-audio-tools";
   };
-}
+})

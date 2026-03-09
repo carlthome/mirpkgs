@@ -5,19 +5,18 @@
   ffmpeg,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "stempeg";
   version = "0.2.4";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-5YcAcYfwUhXlDZKmk/LKDYSu9vRa5iEvhdWoRV97K7E=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
     ffmpeg
   ];
 
@@ -27,7 +26,7 @@ python3.pkgs.buildPythonPackage rec {
     numpy
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     tests = [
       pytest
     ];
@@ -41,4 +40,4 @@ python3.pkgs.buildPythonPackage rec {
     license = with licenses; [ mit ];
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

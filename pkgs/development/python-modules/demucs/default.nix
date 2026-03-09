@@ -13,13 +13,13 @@
   treetable,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "demucs";
   version = "4.0.1";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-5FpaeIuueXZ8N7v25pquA4Yt3MoFVQ+3m5JjRqF31xM=";
   };
 
@@ -52,4 +52,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

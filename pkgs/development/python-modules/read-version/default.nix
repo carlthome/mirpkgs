@@ -4,23 +4,22 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "read-version";
   version = "0.3.2";
   pyproject = true;
 
   src = fetchPypi {
     pname = "read_version";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-Py0whSvOkXSyRPfymq6/TnmQTG7VGhlxYyUBX/MGzj8=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     toml = [
       toml
     ];
@@ -34,4 +33,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

@@ -20,7 +20,6 @@ python3.pkgs.buildPythonPackage {
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -44,7 +43,7 @@ python3.pkgs.buildPythonPackage {
     ./drop-enum34.patch
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     resample = [
       scikits-samplerate
     ];

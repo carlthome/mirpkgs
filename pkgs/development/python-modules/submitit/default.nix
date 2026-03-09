@@ -4,13 +4,13 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "submitit";
   version = "1.5.0";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-J2aGjnFlax4nikLzO87XT66/LFJdunT0zEO+jL72xYg=";
   };
 
@@ -23,7 +23,7 @@ python3.pkgs.buildPythonPackage rec {
     typing-extensions
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     dev = [
       black
       coverage
@@ -47,4 +47,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

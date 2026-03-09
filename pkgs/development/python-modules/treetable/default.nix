@@ -4,19 +4,18 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "treetable";
   version = "0.2.5";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-KclbeXqOz/S7iUy3sQPjmnjJBat4qIqaJH3jDId0Oi8=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   checkPhase = ''
@@ -33,4 +32,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.unlicense;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

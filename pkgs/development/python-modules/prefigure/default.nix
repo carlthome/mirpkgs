@@ -4,13 +4,13 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "prefigure";
   version = "0.0.9";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-yMHLsCOTuQQtNjCbYyMGHIAXgUW0HUL1/jooB3MiGac=";
   };
 
@@ -21,7 +21,6 @@ python3.pkgs.buildPythonApplication rec {
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -41,4 +40,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "prefigure";
   };
-}
+})

@@ -6,19 +6,18 @@
   ffmpeg,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "museval";
   version = "0.4.1";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-JNIUDIWV/RcWdKWu1A+DfJiAoEQ9guGm26qZ8mv2CG4=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
     ffmpeg
   ];
 
@@ -33,7 +32,7 @@ python3.pkgs.buildPythonPackage rec {
     soundfile
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     dev = [
       check-manifest
     ];
@@ -56,4 +55,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

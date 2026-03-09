@@ -4,19 +4,18 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "vmo";
   version = "0.30.5";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-yXt+a7a3JM3aSy8usgCKzab4JK5lTQR1AiMEcFdjNdY=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -32,4 +31,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

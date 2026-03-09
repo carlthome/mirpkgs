@@ -6,7 +6,7 @@
   pytest-runner,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "madmom";
   version = "0.16.1.dev0";
   pyproject = true;
@@ -21,7 +21,6 @@ python3.pkgs.buildPythonPackage rec {
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
     cython
     pytest-runner
     oldest-supported-numpy
@@ -62,8 +61,8 @@ python3.pkgs.buildPythonPackage rec {
   meta = with lib; {
     description = "Python audio and music signal processing library";
     homepage = "https://github.com/CPJKU/madmom";
-    changelog = "https://github.com/CPJKU/madmom/blob/${src.rev}/CHANGES.rst";
+    changelog = "https://github.com/CPJKU/madmom/blob/${finalAttrs.src.rev}/CHANGES.rst";
     license = with licenses; [ bsd3 ];
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})
