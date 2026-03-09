@@ -160,8 +160,9 @@ python3.pkgs.buildPythonPackage (finalAttrs: {
     "test_that_requires_network"
   ];
 
-  # Optional: expose extras as passthru for downstream use
-  passthru.optional-dependencies = with python3.pkgs; {
+  # Optional: expose extras as top-level optional-dependencies for downstream use.
+  # Use for groups formally declared in package metadata (extras_require / [project.optional-dependencies]).
+  optional-dependencies = with python3.pkgs; {
     tests = [ pytest-cov ];
   };
 
@@ -204,7 +205,7 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
 - nixpkgs packages are accessed via `python3.pkgs.<name>`.
 - Use `fetchPypi` for PyPI releases; use `fetchFromGitHub` when tests or extra data require the full repository.
 - When the PyPI distribution name uses underscores (e.g., `stable_audio_tools`) but the package `pname` uses hyphens, pass `pname` explicitly to `fetchPypi`: `fetchPypi { pname = "stable_audio_tools"; inherit version; hash = ...; }`.
-- Use `rec` on `buildPythonPackage` only when not using `finalAttrs` and `src` references `pname` or `version`. Prefer `finalAttrs` for new packages.
+- Never use `rec` on `buildPythonPackage`; always use the `finalAttrs` pattern instead. With `rec`, overriding `pname` or `version` does not update `src`; `finalAttrs` resolves correctly after overrides.
 - Patches go in the same directory as `default.nix` and are applied via `patches = [ ./fix-something.patch ]`.
 - Use `lib.optionals pkgs.stdenv.isDarwin [ ... ]` / `lib.optionals pkgs.stdenv.isLinux [ ... ]` for platform-specific dependencies.
 - The `default.nix` module loader auto-discovers packages by scanning subdirectories — no manual registration needed.
@@ -222,7 +223,7 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
 | `nativeCheckInputs` | Test-only deps (`pytestCheckHook`, etc.) — not propagated |
 | `disabledTests` | List of test names to skip when using `pytestCheckHook` |
 | `pytestFlagsArray` | Extra flags passed to pytest (e.g., `[ "--ignore=tests/slow" ]`) |
-| `passthru.optional-dependencies` | Expose pip extras for downstream use |
+| `optional-dependencies` | Expose pip extras for downstream use (top-level, replaces `passthru.optional-dependencies`) |
 | `pythonImportsCheck` | Module names validated by importing after install |
 | `meta.mainProgram` | Entry point name for `nix run` (use with `buildPythonApplication`) |
 | `meta.changelog` | Link to upstream changelog |
@@ -235,7 +236,7 @@ python3.pkgs.buildPythonApplication (finalAttrs: {
 
 ## Code Formatting
 
-The project uses **nixfmt** (available in the dev shell).
+The project uses **nixfmt** (`nixfmt-rfc-style`, implementing [RFC 166](https://github.com/NixOS/rfcs/pull/166)), available in the dev shell. This is also the official formatter for nixpkgs.
 
 ```sh
 # Format all Nix files
@@ -315,6 +316,7 @@ For packages where running tests is impractical (large data downloads, GPU requi
 - **Missing `build-system`**: When `pyproject = true`, failing to declare `build-system` means the package will be built with no build backend — typically resulting in a wheel-build error. Always specify the backend (e.g., `setuptools`, `hatchling`, `flit-core`).
 - **PyPI name normalisation**: PyPI distribution names may use underscores while `pname` uses hyphens. Pass the exact PyPI name to `fetchPypi`: `fetchPypi { pname = "my_package"; inherit version; hash = ...; }`.
 - **`buildPythonApplication` vs `buildPythonPackage`**: Use `buildPythonApplication` for packages whose primary artifact is a CLI tool. It produces a non-propagating derivation and pairs with `meta.mainProgram`.
+- **Overriding packages**: Prefer `overrideAttrs` over the older `overridePythonAttrs`. When using `finalAttrs`, `overrideAttrs` correctly updates all self-references. Mixing `overridePythonAttrs` with `overrideAttrs` on the same package can silently drop earlier overrides due to a known nixpkgs bug.
 
 ---
 
@@ -326,6 +328,16 @@ mirpkgs exposes a nixpkgs overlay at `overlays.default`. Downstream flakes can c
 inputs.mirpkgs.url = "github:carlthome/mirpkgs";
 
 nixpkgs.overlays = [ inputs.mirpkgs.overlays.default ];
+```
+
+When composing multiple `packageOverrides` without clobbering, use `lib.composeExtensions`:
+
+```nix
+python3.override {
+  packageOverrides = lib.composeExtensions python3.packageOverrides (final: super: {
+    my-pkg = ...;
+  });
+}
 ```
 
 See `examples/flake/` for a complete working template.
