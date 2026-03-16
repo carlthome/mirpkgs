@@ -22,6 +22,7 @@ python3.pkgs.buildPythonApplication rec {
   dependencies = with python3.pkgs; [
     numpy
     requests
+    six
     torch
     tqdm
     sentencepiece

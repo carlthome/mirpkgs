@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   python3,
   fetchPypi,

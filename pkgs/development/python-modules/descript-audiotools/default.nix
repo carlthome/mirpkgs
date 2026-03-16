@@ -10,7 +10,7 @@
 
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "descript-audiotools";
   version = "0.7.4";
   pyproject = true;
@@ -52,7 +52,7 @@ python3.pkgs.buildPythonApplication rec {
     tqdm
   ];
 
-  optional-dependencies = with python3.pkgs; {
+  passthru.optional-dependencies = with python3.pkgs; {
     docs = [
       myst-nb
       myst-parser

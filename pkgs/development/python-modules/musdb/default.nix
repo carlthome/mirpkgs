@@ -19,9 +19,9 @@ python3.pkgs.buildPythonPackage rec {
   build-system = with python3.pkgs; [
     setuptools
     wheel
-    ffmpeg
-    pytest
   ];
+
+  nativeBuildInputs = [ ffmpeg ];
 
   dependencies = with python3.pkgs; [
     numpy

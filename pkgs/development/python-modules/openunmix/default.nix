@@ -14,6 +14,11 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-7uMKO6xaSpMfD1Xf3cC1QEjr/zE9obojlHD2sI3vsHc=";
   };
 
+  build-system = with python3.pkgs; [
+    setuptools
+    wheel
+  ];
+
   dependencies = with python3.pkgs; [
     numpy
     torch
