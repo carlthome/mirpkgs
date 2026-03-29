@@ -5,7 +5,7 @@
   opencv-contrib-python,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "mediapipe";
   version = "0.10.11";
   pyproject = true;
@@ -19,7 +19,6 @@ python3.pkgs.buildPythonApplication rec {
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -45,4 +44,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "mediapipe";
   };
-}
+})

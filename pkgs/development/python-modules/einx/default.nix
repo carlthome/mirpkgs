@@ -4,19 +4,18 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "einx";
   version = "0.3.0";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-F/+HxqD2irNYwdpInwDpXx3hBv0S/xfQ+z4hCqoeX4w=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -25,7 +24,7 @@ python3.pkgs.buildPythonApplication rec {
     sympy
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     keras = [
       keras
     ];
@@ -43,4 +42,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "einx";
   };
-}
+})

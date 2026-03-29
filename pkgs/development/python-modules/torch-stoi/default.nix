@@ -5,20 +5,19 @@
   pystoi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "torch-stoi";
   version = "0.2.1";
   pyproject = true;
 
   src = fetchPypi {
     pname = "torch_stoi";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-r7K3eE9XlKihFGNAcwSYuqkNHEA1OvMMHsv2tj1fjd0=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -37,4 +36,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "torch-stoi";
   };
-}
+})

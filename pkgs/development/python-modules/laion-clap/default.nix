@@ -4,14 +4,14 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "laion-clap";
   version = "1.1.7";
   pyproject = true;
 
   src = fetchPypi {
     pname = "laion_clap";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-mrnFI2ueCUT2fWaF7yqcFIFOvRPA2GLH/gepu1ZgQ5c=";
   };
 
@@ -61,4 +61,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with lib.maintainers; [ ];
     mainProgram = "laion-clap";
   };
-}
+})

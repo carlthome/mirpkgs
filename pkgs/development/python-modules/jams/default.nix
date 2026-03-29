@@ -4,19 +4,18 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "jams";
   version = "0.3.5";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-JgsZIvD6wLMNgvdQ4LHSQJBQcNtOUAtS76jzICQJ0P4=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -27,7 +26,8 @@ python3.pkgs.buildPythonPackage rec {
     mir-eval
   ];
 
-  checkInputs = with python3.pkgs; [
+  nativeCheckInputs = with python3.pkgs; [
+    pytestCheckHook
     pytest-cov
   ];
 
@@ -39,4 +39,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.isc;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

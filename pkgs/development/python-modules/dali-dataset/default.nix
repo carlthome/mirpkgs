@@ -4,14 +4,14 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "dali-dataset";
   version = "1.1";
   pyproject = true;
 
   src = fetchPypi {
     pname = "DALI-dataset";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-1PA581EiRkkgcc5w6fWQF8atZMz5+JRGY/02qcgWe3A=";
   };
 
@@ -38,4 +38,4 @@ python3.pkgs.buildPythonPackage rec {
     ];
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

@@ -4,13 +4,13 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "music21";
   version = "9.7.1";
   format = "pyproject";
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-sFbMQfuYn0kuKRiCwTwC68E+j1c0xqq5rrn+bP0sJVA=";
   };
 
@@ -48,4 +48,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.bsd3;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

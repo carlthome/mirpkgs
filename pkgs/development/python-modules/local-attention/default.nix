@@ -6,20 +6,19 @@
   pytest-runner,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "local-attention";
   version = "1.11.1";
   pyproject = true;
 
   src = fetchPypi {
     pname = "local_attention";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-vyRFPR6iUe0HWjpMc05bYI5J6cSJ+bhn2luVUDjSwGM=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
     pytest-runner
   ];
 
@@ -40,4 +39,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with lib.maintainers; [ ];
     mainProgram = "local-attention";
   };
-}
+})

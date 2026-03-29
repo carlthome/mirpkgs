@@ -4,13 +4,13 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "pytest-runner";
   version = "6.0.1";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-cNRzlYWnAI83v0kzwBP9sye4h4paafy7MxbIiILw9Js=";
   };
 
@@ -46,4 +46,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with lib.maintainers; [ ];
     mainProgram = "pytest-runner";
   };
-}
+})

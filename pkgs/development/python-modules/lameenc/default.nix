@@ -14,7 +14,7 @@ let
   });
 in
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "lameenc";
   version = "1.8.1";
   pyproject = true;
@@ -30,7 +30,6 @@ python3.pkgs.buildPythonPackage rec {
   build-system = with python3.pkgs; [
     setuptools
     setuptools-scm
-    wheel
   ];
 
   pypaBuildFlags = [
@@ -48,4 +47,4 @@ python3.pkgs.buildPythonPackage rec {
     license = with licenses; [ lgpl3 ];
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

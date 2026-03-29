@@ -24,7 +24,6 @@ python3.pkgs.buildPythonApplication {
   build-system = with python3.pkgs; [
     attrs
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [

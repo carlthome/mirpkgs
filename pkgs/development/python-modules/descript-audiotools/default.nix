@@ -10,7 +10,7 @@
 
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "descript-audiotools";
   version = "0.7.4";
   pyproject = true;
@@ -18,13 +18,12 @@ python3.pkgs.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "descriptinc";
     repo = "audiotools";
-    rev = version;
+    rev = finalAttrs.version;
     hash = "sha256-mDReVnVgxb+qcTosUSNG3jp6QhaIWdcddyfK4xuyxCc=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -89,4 +88,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with lib.maintainers; [ ];
     mainProgram = "descript-audiotools";
   };
-}
+})

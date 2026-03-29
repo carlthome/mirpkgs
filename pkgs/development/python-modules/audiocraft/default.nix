@@ -9,13 +9,13 @@
   torchtext,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "audiocraft";
   version = "1.3.0";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-2CrePrT5NO4a20OK5oeiv1nTPKSiADm+qwclSMA4rIA=";
   };
 
@@ -66,4 +66,4 @@ python3.pkgs.buildPythonPackage rec {
     license = with licenses; [ mit ];
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

@@ -4,20 +4,19 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "diffq";
   version = "0.2.4";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-BJBkhh6XTr8A0LrauLMkx3UDc3FBntoxUJhbnUd7W9I=";
   };
 
   build-system = with python3.pkgs; [
     cython
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -26,7 +25,7 @@ python3.pkgs.buildPythonPackage rec {
     torch
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     dev = [
       coverage
       flake8
@@ -43,4 +42,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

@@ -9,13 +9,13 @@
   openjpeg,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "opencv-contrib-python";
   version = "4.12.0.88";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-Dx4igjqs4JBnuaDo4rS6bXoe8IgH1s6+oxXzEz9Bmg4=";
   };
 
@@ -25,7 +25,6 @@ python3.pkgs.buildPythonApplication rec {
     pip
     scikit-build
     setuptools
-    wheel
 
     #opencv4
     #opencl-headers
@@ -63,4 +62,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ carlthome ];
     mainProgram = "opencv-contrib-python";
   };
-}
+})

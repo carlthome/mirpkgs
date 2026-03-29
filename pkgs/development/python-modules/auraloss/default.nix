@@ -4,13 +4,13 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "auraloss";
   version = "0.4.0";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-hus7zoGq9XnZ4t9ZsMrnq43nk5AsNEr3LyVdU8PVyVQ=";
   };
 
@@ -22,7 +22,6 @@ python3.pkgs.buildPythonApplication rec {
   build-system = with python3.pkgs; [
     attrs
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -30,7 +29,7 @@ python3.pkgs.buildPythonApplication rec {
     torch
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     all = [
       librosa
       matplotlib
@@ -47,4 +46,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "auraloss";
   };
-}
+})

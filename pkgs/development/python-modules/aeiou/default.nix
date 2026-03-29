@@ -5,13 +5,13 @@
   pedalboard,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "aeiou";
   version = "0.0.20";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-nGHJ3wOHfXhQkTdc+DsB1F2VPk+kZuuhpiUpAaUBC00=";
   };
 
@@ -23,7 +23,6 @@ python3.pkgs.buildPythonApplication rec {
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies =
@@ -55,7 +54,7 @@ python3.pkgs.buildPythonApplication rec {
       umap-learn
     ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     dev = [
       nbformat
     ];
@@ -70,4 +69,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "aeiou";
   };
-}
+})

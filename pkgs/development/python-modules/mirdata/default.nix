@@ -8,18 +8,22 @@
   dali-dataset,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "mirdata";
   version = "1.0.0";
-  format = "setuptools";
+  pyproject = true;
 
   # The tests require data files that are not included in the source release, so we take the source from GitHub instead.
   src = fetchFromGitHub {
     owner = "mir-dataset-loaders";
-    repo = pname;
-    rev = version;
+    repo = finalAttrs.pname;
+    rev = finalAttrs.version;
     hash = "sha256-yF4mh2StTr5kLUu3wI3SZF9ASLhhHAP/+WM7x1xNnI8=";
   };
+
+  build-system = with python3.pkgs; [
+    setuptools
+  ];
 
   dependencies = with python3.pkgs; [
     attrs
@@ -40,7 +44,7 @@ python3.pkgs.buildPythonPackage rec {
     smart-open
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     cipi = [
       music21
     ];
@@ -59,7 +63,6 @@ python3.pkgs.buildPythonPackage rec {
       sphinx
       sphinx-rtd-theme
       sphinx-togglebutton
-      #sphinxcontrib-napoleon
     ];
     gcs = [
       smart-open
@@ -82,23 +85,29 @@ python3.pkgs.buildPythonPackage rec {
       pytest-localserver
       pytest-mock
       pytest-xdist
-      #pytest-pep8
       smart-open
       testcontainers
-      #types-chardet
       types-pyyaml
     ];
   };
 
-  checkInputs = lib.flatten (builtins.attrValues passthru.optional-dependencies);
+  nativeCheckInputs = with python3.pkgs; [
+    pytestCheckHook
+    pytest-xdist
+  ];
 
-  checkPhase = ''
-    runHook preCheck
+  preCheck = ''
     export DEFAULT_DATA_HOME=$TEMP
     export NUMBA_CACHE_DIR=$TEMP
-    ${python3.pkgs.pytest}/bin/pytest -n auto tests/
-    runHook postCheck
   '';
+
+  pytestFlagsArray = [ "-n" "auto" ];
+
+  # Tests require downloading datasets from the internet.
+  disabledTestPaths = [
+    "tests/test_loaders.py"
+    "tests/test_soundfile_loaders.py"
+  ];
 
   pythonImportsCheck = [ "mirdata" ];
 
@@ -108,4 +117,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.bsd3;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

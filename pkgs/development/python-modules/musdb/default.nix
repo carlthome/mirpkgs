@@ -6,19 +6,18 @@
   ffmpeg,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "musdb";
   version = "0.4.0";
   pyproject = true;
 
   src = fetchPypi {
-    inherit pname version;
+    inherit (finalAttrs) pname version;
     hash = "sha256-bbTV5L8myZgqk4esYX+uf8gYLASF/Em0Q3JxI96L4FM=";
   };
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
     ffmpeg
     pytest
   ];
@@ -30,7 +29,7 @@ python3.pkgs.buildPythonPackage rec {
     tqdm
   ];
 
-  passthru.optional-dependencies = with python3.pkgs; {
+  optional-dependencies = with python3.pkgs; {
     dev = [
       check-manifest
     ];
@@ -52,4 +51,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

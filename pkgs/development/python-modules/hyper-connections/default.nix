@@ -4,14 +4,14 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "hyper-connections";
   version = "0.1.15";
   pyproject = true;
 
   src = fetchPypi {
     pname = "hyper_connections";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-02+eqIA+guFPIzCFZTZg6tUhF8oXhxhr0P2xlwtlzhw=";
   };
 
@@ -35,4 +35,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with lib.maintainers; [ ];
     mainProgram = "hyper-connections";
   };
-}
+})

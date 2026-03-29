@@ -27,7 +27,7 @@ let
     patches = [ ];
   });
 in
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "pedalboard";
   version = "0.8.3";
   pyproject = true;
@@ -47,7 +47,6 @@ python3.pkgs.buildPythonPackage rec {
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
     pybind11
     juce6
     pcre
@@ -56,7 +55,6 @@ python3.pkgs.buildPythonPackage rec {
   dependencies = with python3.pkgs; [
     numpy
     setuptools
-    wheel
     pybind11
     juce6
   ];
@@ -68,4 +66,4 @@ python3.pkgs.buildPythonPackage rec {
     maintainers = with maintainers; [ carlthome ];
     mainProgram = "pedalboard";
   };
-}
+})

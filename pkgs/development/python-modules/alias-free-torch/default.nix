@@ -4,14 +4,14 @@
   fetchPypi,
 }:
 
-python3.pkgs.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication (finalAttrs: {
   pname = "alias-free-torch";
   version = "0.0.5";
   pyproject = true;
 
   src = fetchPypi {
     pname = "alias_free_torch";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-e6CZ5weKq8TT03FpL4J9rmZ8Bzrui/Cx2LgwP33TZdM=";
   };
 
@@ -21,7 +21,6 @@ python3.pkgs.buildPythonApplication rec {
 
   build-system = with python3.pkgs; [
     setuptools
-    wheel
   ];
 
   dependencies = with python3.pkgs; [
@@ -37,4 +36,4 @@ python3.pkgs.buildPythonApplication rec {
     maintainers = with maintainers; [ ];
     mainProgram = "alias-free-torch";
   };
-}
+})

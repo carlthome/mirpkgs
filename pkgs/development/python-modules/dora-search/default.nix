@@ -6,14 +6,14 @@
   submitit,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "dora-search";
   version = "0.1.12";
   pyproject = true;
 
   src = fetchPypi {
     pname = "dora_search";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-KVb9LEx+S5pIMOg/DUz5Yb5Fz7oaLwVwKB6R0VrFFvs=";
   };
 
@@ -34,4 +34,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})

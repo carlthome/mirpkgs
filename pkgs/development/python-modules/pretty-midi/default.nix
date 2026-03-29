@@ -5,16 +5,20 @@
   mido,
 }:
 
-python3.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage (finalAttrs: {
   pname = "pretty-midi";
   version = "0.2.10";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchPypi {
     pname = "pretty_midi";
-    inherit version;
+    inherit (finalAttrs) version;
     hash = "sha256-6m4ZL5QERnToMzNuofQVMY3fKOMgMCrHsQnt/w1FNL0=";
   };
+
+  build-system = with python3.pkgs; [
+    setuptools
+  ];
 
   dependencies = with python3.pkgs; [
     six
@@ -30,4 +34,4 @@ python3.pkgs.buildPythonPackage rec {
     license = licenses.mit;
     maintainers = with maintainers; [ carlthome ];
   };
-}
+})
