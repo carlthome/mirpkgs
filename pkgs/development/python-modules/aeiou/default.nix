@@ -71,4 +71,3 @@ python3.pkgs.buildPythonApplication rec {
     mainProgram = "aeiou";
   };
 }
-# ci: diagnostic rebuild

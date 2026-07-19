@@ -46,4 +46,3 @@ python3.pkgs.buildPythonApplication rec {
     mainProgram = "mediapipe";
   };
 }
-# ci: diagnostic rebuild

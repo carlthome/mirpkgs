@@ -33,11 +33,15 @@ python3.pkgs.buildPythonPackage rec {
     pytestCheckHook
   ];
 
-  disabledTests = [
-    "music21/scale/test_intervalNetwork.py::Test::testScaleArbitrary"
-    "music21/test/test_chord.py::TestExternal::testBasic"
-    "music21/test/test_chord.py::TestExternal::testPostTonalChords"
-    "music21/test/test_note.py::Test::testComplex"
+  # These are full pytest node IDs, so they must be deselected explicitly;
+  # disabledTests only matches bare names via `-k` and would silently no-op.
+  # The TestExternal cases and testComplex need external tools (MuseScore,
+  # Lilypond) that are unavailable in the build sandbox.
+  pytestFlagsArray = [
+    "--deselect=music21/scale/test_intervalNetwork.py::Test::testScaleArbitrary"
+    "--deselect=music21/test/test_chord.py::TestExternal::testBasic"
+    "--deselect=music21/test/test_chord.py::TestExternal::testPostTonalChords"
+    "--deselect=music21/test/test_note.py::Test::testComplex"
   ];
 
   pythonImportsCheck = [ "music21" ];

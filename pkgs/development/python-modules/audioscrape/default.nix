@@ -49,4 +49,3 @@ python3.pkgs.buildPythonApplication rec {
     mainProgram = "audioscrape";
   };
 }
-# ci: diagnostic rebuild
