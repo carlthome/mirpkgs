@@ -8,6 +8,7 @@
   gcc,
   juce,
   pcre,
+  pkg-config,
   python3,
   fetchgit,
   libcxx,
@@ -51,6 +52,9 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-kp2PJ3dadfbsxtAogYnwc0dzfEbmET/tIUP0M9B0Udg=";
     fetchSubmodules = true;
   };
+
+  # pedalboard's setup.py shells out to pkg-config to locate dependencies.
+  nativeBuildInputs = [ pkg-config ];
 
   build-system = with python3.pkgs; [
     setuptools
