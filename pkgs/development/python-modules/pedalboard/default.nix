@@ -56,6 +56,23 @@ python3.pkgs.buildPythonPackage rec {
   # pedalboard's setup.py shells out to pkg-config to locate dependencies.
   nativeBuildInputs = [ pkg-config ];
 
+  # pedalboard compiles its vendored JUCE sources, which pull in juce_gui_basics
+  # and therefore need the X11/freetype/ALSA system libraries on Linux.
+  buildInputs = lib.optionals stdenv.isLinux (
+    with pkgs;
+    [
+      xorg.libX11
+      xorg.libXext
+      xorg.libXinerama
+      xorg.libXcursor
+      xorg.libXrandr
+      xorg.libXrender
+      freetype
+      alsa-lib
+      curl
+    ]
+  );
+
   build-system = with python3.pkgs; [
     setuptools
     wheel
