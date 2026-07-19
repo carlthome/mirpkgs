@@ -40,21 +40,11 @@ python3.pkgs.buildPythonPackage rec {
   version = "0.8.3";
   pyproject = true;
 
-  NIX_CFLAGS_COMPILE =
-    lib.optionals stdenv.isDarwin [
-      "-I${lib.getDev libcxx}/include/c++/v1"
-      "-I${juce6}/share/juce/modules"
-      "-I${juce6}/share/juce/modules/juce_audio_processors/format_types/VST3_SDK"
-    ]
-    # pedalboard's vendored JUCE 6 sources use std::exchange without including
-    # <utility>; force-include it (and <cstdint>) so they build on modern GCC.
-    # Safe here because setup.py compiles only C++ translation units.
-    ++ lib.optionals stdenv.isLinux [
-      "-include"
-      "utility"
-      "-include"
-      "cstdint"
-    ];
+  NIX_CFLAGS_COMPILE = lib.optionals stdenv.isDarwin [
+    "-I${lib.getDev libcxx}/include/c++/v1"
+    "-I${juce6}/share/juce/modules"
+    "-I${juce6}/share/juce/modules/juce_audio_processors/format_types/VST3_SDK"
+  ];
 
   src = fetchgit {
     url = "https://github.com/spotify/pedalboard.git";
@@ -62,6 +52,16 @@ python3.pkgs.buildPythonPackage rec {
     hash = "sha256-kp2PJ3dadfbsxtAogYnwc0dzfEbmET/tIUP0M9B0Udg=";
     fetchSubmodules = true;
   };
+
+  # JUCE 6.1.4 uses std::exchange without including <utility>, which no longer
+  # compiles on modern GCC. Prepend the include to pedalboard's JUCE unity
+  # translation units. A compiler force-include can't be used here because
+  # setup.py also compiles C sources, which reject the C++-only header.
+  postPatch = ''
+    for f in pedalboard/juce_overrides/include_juce_*.cpp; do
+      sed -i -e '1i #include <cstdint>' -e '1i #include <utility>' "$f"
+    done
+  '';
 
   # pedalboard's setup.py shells out to pkg-config to locate dependencies.
   nativeBuildInputs = [ pkg-config ];
