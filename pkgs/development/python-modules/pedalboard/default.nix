@@ -40,11 +40,20 @@ python3.pkgs.buildPythonPackage rec {
   version = "0.8.3";
   pyproject = true;
 
-  NIX_CFLAGS_COMPILE = lib.optionals stdenv.isDarwin [
-    "-I${lib.getDev libcxx}/include/c++/v1"
-    "-I${juce6}/share/juce/modules"
-    "-I${juce6}/share/juce/modules/juce_audio_processors/format_types/VST3_SDK"
-  ];
+  NIX_CFLAGS_COMPILE =
+    lib.optionals stdenv.isDarwin [
+      "-I${lib.getDev libcxx}/include/c++/v1"
+      "-I${juce6}/share/juce/modules"
+      "-I${juce6}/share/juce/modules/juce_audio_processors/format_types/VST3_SDK"
+    ]
+    # pedalboard vendors old C (e.g. LAME) that predates GCC 14, which promotes
+    # these legacy warnings to errors by default. Downgrade them back to
+    # warnings. These options are C-only; g++ ignores them harmlessly.
+    ++ lib.optionals stdenv.isLinux [
+      "-Wno-error=incompatible-pointer-types"
+      "-Wno-error=implicit-function-declaration"
+      "-Wno-error=int-conversion"
+    ];
 
   src = fetchgit {
     url = "https://github.com/spotify/pedalboard.git";
