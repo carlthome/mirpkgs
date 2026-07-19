@@ -40,11 +40,21 @@ python3.pkgs.buildPythonPackage rec {
   version = "0.8.3";
   pyproject = true;
 
-  NIX_CFLAGS_COMPILE = lib.optionals stdenv.isDarwin [
-    "-I${lib.getDev libcxx}/include/c++/v1"
-    "-I${juce6}/share/juce/modules"
-    "-I${juce6}/share/juce/modules/juce_audio_processors/format_types/VST3_SDK"
-  ];
+  NIX_CFLAGS_COMPILE =
+    lib.optionals stdenv.isDarwin [
+      "-I${lib.getDev libcxx}/include/c++/v1"
+      "-I${juce6}/share/juce/modules"
+      "-I${juce6}/share/juce/modules/juce_audio_processors/format_types/VST3_SDK"
+    ]
+    # pedalboard's vendored JUCE 6 sources use std::exchange without including
+    # <utility>; force-include it (and <cstdint>) so they build on modern GCC.
+    # Safe here because setup.py compiles only C++ translation units.
+    ++ lib.optionals stdenv.isLinux [
+      "-include"
+      "utility"
+      "-include"
+      "cstdint"
+    ];
 
   src = fetchgit {
     url = "https://github.com/spotify/pedalboard.git";
