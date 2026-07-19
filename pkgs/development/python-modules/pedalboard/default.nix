@@ -27,8 +27,10 @@ let
     patches = [ ];
     # JUCE 6.1.4 predates newer libstdc++ header hygiene; force-include the
     # headers it relies on transitively (e.g. std::exchange from <utility>).
+    # Scope this to C++ via CXXFLAGS (CMAKE_CXX_FLAGS) so CMake's C compiler
+    # ABI check isn't fed C++-only headers.
     env = (attrs.env or { }) // {
-      NIX_CFLAGS_COMPILE = "${attrs.env.NIX_CFLAGS_COMPILE or ""} -include utility -include cstdint";
+      CXXFLAGS = "${attrs.env.CXXFLAGS or ""} -include cstdint -include utility";
     };
   });
 in
