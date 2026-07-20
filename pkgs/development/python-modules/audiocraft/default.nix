@@ -28,6 +28,12 @@ python3.pkgs.buildPythonPackage rec {
     substituteInPlace requirements.txt --replace-fail 'xformers<0.0.23' ' '
   '';
 
+  # librosa's numba @jit(cache=True) tries to write its cache next to the
+  # read-only store source during pythonImportsCheck; give it a writable dir.
+  preBuild = ''
+    export NUMBA_CACHE_DIR=$TMPDIR
+  '';
+
   # Upstream pins exact versions (torch==2.1.0, av==11.0.0, etc.) that are
   # older than what nixpkgs now provides; relax them to the available ones.
   pythonRelaxDeps = [
