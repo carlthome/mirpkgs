@@ -27,6 +27,16 @@ python3.pkgs.buildPythonPackage rec {
     substituteInPlace requirements.txt --replace-fail 'xformers<0.0.23' ' '
   '';
 
+  # Upstream pins exact versions (torch==2.1.0, av==11.0.0, etc.) that are
+  # older than what nixpkgs now provides; relax them to the available ones.
+  pythonRelaxDeps = [
+    "av"
+    "torch"
+    "torchaudio"
+    "torchvision"
+    "torchtext"
+  ];
+
   dependencies =
     with python3.pkgs;
     [
