@@ -14,8 +14,9 @@ python3.pkgs.buildPythonPackage {
   src = fetchFromGitHub {
     owner = "carlthome";
     repo = "msaf";
-    rev = "patch-3";
-    hash = "sha256-hvIhIB/Z0rqaXsZoR5fPhYiglLkbwm2yx05PABv8Tos=";
+    # Pin an immutable commit (was the mutable "patch-3" branch, since deleted).
+    rev = "51328e9503a8213082aa7be2ae12fb55575bbdbd";
+    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
   };
 
   build-system = with python3.pkgs; [
