@@ -43,6 +43,8 @@ python3.pkgs.buildPythonPackage {
 
   patches = [
     ./drop-enum34.patch
+    # setup.py uses imp.load_source, removed in Python 3.12; use importlib instead.
+    ./use-importlib.patch
   ];
 
   passthru.optional-dependencies = with python3.pkgs; {
