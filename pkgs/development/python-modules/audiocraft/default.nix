@@ -6,6 +6,7 @@
   demucs,
   flashy,
   hydra-colorlog,
+  julius,
   torchtext,
 }:
 
