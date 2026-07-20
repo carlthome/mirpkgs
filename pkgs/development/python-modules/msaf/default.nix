@@ -16,7 +16,7 @@ python3.pkgs.buildPythonPackage {
     repo = "msaf";
     # Pin an immutable commit (was the mutable "patch-3" branch, since deleted).
     rev = "51328e9503a8213082aa7be2ae12fb55575bbdbd";
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    hash = "sha256-MmsgrYC9TthWZQWEIqtz68E0jvO6f9/a6BNatMyH3E4=";
   };
 
   build-system = with python3.pkgs; [
