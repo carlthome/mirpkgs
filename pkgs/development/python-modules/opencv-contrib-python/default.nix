@@ -51,6 +51,10 @@ python3.pkgs.buildPythonApplication rec {
     numpy
   ];
 
+  # Upstream caps numpy at <2.3.0 per the ABI it builds against, but the wheel
+  # here is built against whichever numpy nixpkgs ships, so the cap is moot.
+  pythonRelaxDeps = [ "numpy" ];
+
   pythonImportsCheck = [ "opencv_contrib_python" ];
 
   meta = with lib; {
