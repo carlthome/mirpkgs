@@ -68,6 +68,9 @@ python3.pkgs.buildPythonApplication rec {
     x-transformers
   ];
 
+  # Every dependency is pinned with == to whatever was current in 2023.
+  pythonRelaxDeps = true;
+
   pythonImportsCheck = [ "stable_audio_tools" ];
 
   meta = with lib; {
