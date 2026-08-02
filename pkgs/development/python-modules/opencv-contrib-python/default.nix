@@ -55,7 +55,8 @@ python3.pkgs.buildPythonApplication rec {
   # here is built against whichever numpy nixpkgs ships, so the cap is moot.
   pythonRelaxDeps = [ "numpy" ];
 
-  pythonImportsCheck = [ "opencv_contrib_python" ];
+  # The distribution is named opencv-contrib-python, but the module is cv2.
+  pythonImportsCheck = [ "cv2" ];
 
   meta = with lib; {
     description = "Wrapper package for OpenCV python bindings";
