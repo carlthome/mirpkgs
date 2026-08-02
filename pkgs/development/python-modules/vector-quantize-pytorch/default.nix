@@ -2,7 +2,6 @@
   lib,
   python3,
   fetchPypi,
-  einx,
 }:
 
 python3.pkgs.buildPythonApplication rec {
