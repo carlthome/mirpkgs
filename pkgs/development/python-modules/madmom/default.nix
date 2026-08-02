@@ -45,7 +45,12 @@ python3.pkgs.buildPythonPackage rec {
   nativeCheckInputs = with python3.pkgs; [
     ffmpeg
     pytestCheckHook
+    pytest-timeout
   ];
+
+  # Something in tests/test_bin.py blocks forever and burns the whole six hour
+  # runner budget. Fail the offending test instead so the log names it.
+  pytestFlags = [ "--timeout=300" ];
 
   pythonImportsCheck = [ "madmom" ];
 
