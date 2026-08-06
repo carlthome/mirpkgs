@@ -1,0 +1,14 @@
+distutils was removed from the standard library in Python 3.12, and setuptools
+no longer installs its compatibility shim. prefigure never uses the module --
+the one reference is commented out -- so just drop the import.
+
+--- a/prefigure/prefigure.py
++++ b/prefigure/prefigure.py
+@@ -14,7 +14,6 @@
+ import wandb
+ import sys
+ import copy
+-import distutils
+
+ DEFAULTS_FILE = 'defaults.ini'
+

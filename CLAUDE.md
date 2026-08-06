@@ -40,9 +40,9 @@ mirpkgs/
     └── flake/                             # Template: use mirpkgs as a nixpkgs overlay
 ```
 
-### Current packages (54 total)
+### Current packages (52 total)
 
-`aeiou`, `alias-free-torch`, `argbind`, `audiocraft`, `audioscrape`, `auraloss`, `dali-dataset`, `demucs`, `descript-audio-codec`, `descript-audiotools`, `diffq`, `dora-search`, `einops-exts`, `einx`, `ema-pytorch`, `encodec`, `flashy`, `hydra-colorlog`, `hyper-connections`, `jams`, `julius`, `laion-clap`, `lameenc`, `local-attention`, `madmom`, `mediapipe`, `mido`, `mirdata`, `msaf`, `musdb`, `museval`, `music21`, `opencv-contrib-python`, `openunmix`, `pedalboard`, `prefigure`, `pretty-midi`, `pyloudnorm`, `pystoi`, `pytest-runner`, `randomname`, `read-version`, `soundcloud-lib`, `stable-audio-tools`, `stempeg`, `submitit`, `torch-stoi`, `torchtext`, `treetable`, `v-diffusion-pytorch`, `vector-quantize-pytorch`, `vmo`, `x-transformers`
+`aeiou`, `alias-free-torch`, `argbind`, `audiocraft`, `audioscrape`, `auraloss`, `dali-dataset`, `demucs`, `descript-audio-codec`, `descript-audiotools`, `diffq`, `dora-search`, `einops-exts`, `ema-pytorch`, `encodec`, `flashy`, `hydra-colorlog`, `hyper-connections`, `jams`, `julius`, `laion-clap`, `lameenc`, `local-attention`, `madmom`, `mediapipe`, `mido`, `mirdata`, `msaf`, `musdb`, `museval`, `music21`, `opencv-contrib-python`, `openunmix`, `pedalboard`, `prefigure`, `pretty-midi`, `pyloudnorm`, `pystoi`, `pytest-runner`, `randomname`, `read-version`, `soundcloud-lib`, `stable-audio-tools`, `stempeg`, `submitit`, `torch-stoi`, `torchtext`, `treetable`, `v-diffusion-pytorch`, `vector-quantize-pytorch`, `vmo`, `x-transformers`
 
 ---
 
