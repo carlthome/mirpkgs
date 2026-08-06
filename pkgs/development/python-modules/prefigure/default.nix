@@ -17,6 +17,8 @@ python3.pkgs.buildPythonApplication rec {
   patches = [
     # This is part of the standard library and shoudl not be mentioned in setup.py
     ./remove-argparse.patch
+    # distutils is gone from Python 3.12 onwards, and prefigure never uses it.
+    ./remove-distutils-import.patch
   ];
 
   build-system = with python3.pkgs; [

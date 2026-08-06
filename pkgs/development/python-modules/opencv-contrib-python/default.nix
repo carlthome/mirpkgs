@@ -51,7 +51,12 @@ python3.pkgs.buildPythonApplication rec {
     numpy
   ];
 
-  pythonImportsCheck = [ "opencv_contrib_python" ];
+  # Upstream caps numpy at <2.3.0 per the ABI it builds against, but the wheel
+  # here is built against whichever numpy nixpkgs ships, so the cap is moot.
+  pythonRelaxDeps = [ "numpy" ];
+
+  # The distribution is named opencv-contrib-python, but the module is cv2.
+  pythonImportsCheck = [ "cv2" ];
 
   meta = with lib; {
     description = "Wrapper package for OpenCV python bindings";

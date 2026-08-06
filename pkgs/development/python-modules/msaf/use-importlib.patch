@@ -1,0 +1,14 @@
+diff --git a/setup.py b/setup.py
+--- a/setup.py
++++ b/setup.py
+@@ -1,6 +1,8 @@
+ import glob
+-import imp
++import importlib.util
+ 
+ from setuptools import find_packages, setup
+ 
+-version = imp.load_source("msaf.version", "msaf/version.py")
++_spec = importlib.util.spec_from_file_location("msaf.version", "msaf/version.py")
++version = importlib.util.module_from_spec(_spec)
++_spec.loader.exec_module(version)
