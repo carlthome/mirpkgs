@@ -4,7 +4,6 @@
   fetchPypi,
   mediapipe,
   soundcloud-lib,
-  ...
 }:
 
 python3.pkgs.buildPythonApplication rec {
