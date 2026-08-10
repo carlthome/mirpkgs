@@ -24,6 +24,8 @@ python3.pkgs.buildPythonApplication rec {
   build-system = with python3.pkgs; [
     setuptools
     wheel
+    # setup.py imports pkg_resources, which setuptools no longer ships.
+    standard-pkg-resources
   ];
 
   dependencies =

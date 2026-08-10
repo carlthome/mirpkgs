@@ -1,39 +1,59 @@
 {
   lib,
+  stdenv,
   python3,
-  fetchFromGitHub,
+  fetchPypi,
+  autoPatchelfHook,
   opencv-contrib-python,
 }:
 
+let
+  # Upstream publishes one ABI-independent wheel per platform.
+  wheels = {
+    x86_64-linux = {
+      platform = "manylinux_2_28_x86_64";
+      hash = "sha256-B6RJRGv4iKiieH2/b8GjPaTEeXcxPe7GTRPDW/9B9tI=";
+    };
+    aarch64-linux = {
+      platform = "manylinux_2_28_aarch64";
+      hash = "sha256-5X2aYGcjssd6UbsdGUyOtzaoTFUtJFeKhTb0f2VrskE=";
+    };
+    aarch64-darwin = {
+      platform = "macosx_11_0_arm64";
+      hash = "sha256-fuR4O+QbLeNF4etx4vfnwVmlDtXCg+YMy49aYCfHCoI=";
+    };
+  };
+  wheel =
+    wheels.${stdenv.hostPlatform.system}
+      or (throw "mediapipe: no wheel for ${stdenv.hostPlatform.system}");
+in
+
 python3.pkgs.buildPythonApplication rec {
   pname = "mediapipe";
-  version = "0.10.11";
-  pyproject = true;
+  version = "1.0.0";
+  format = "wheel";
 
-  src = fetchFromGitHub {
-    owner = "google";
-    repo = "mediapipe";
-    rev = "v${version}";
-    hash = "sha256-+9Io6ta7wzjR6r0jVHPnEvro+he2wBw9nlbdIbcjjpE=";
+  # Building from source drives Bazel, which fetches its own dependencies, so
+  # take the wheel upstream already built.
+  src = fetchPypi {
+    inherit pname version;
+    format = "wheel";
+    dist = "py3";
+    python = "py3";
+    abi = "none";
+    inherit (wheel) platform hash;
   };
 
-  build-system = with python3.pkgs; [
-    setuptools
-    wheel
-  ];
+  nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
 
   dependencies = with python3.pkgs; [
     absl-py
-    attrs
+    certifi
     flatbuffers
-    jax
-    jaxlib-bin
     matplotlib
     numpy
     opencv-contrib-python
-    protobuf
     sounddevice
-    torch
   ];
 
   pythonImportsCheck = [ "mediapipe" ];
@@ -43,6 +63,7 @@ python3.pkgs.buildPythonApplication rec {
     homepage = "https://github.com/google/mediapipe";
     license = licenses.asl20;
     maintainers = with maintainers; [ ];
-    mainProgram = "mediapipe";
+    platforms = builtins.attrNames wheels;
+    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
   };
 }
