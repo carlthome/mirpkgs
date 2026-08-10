@@ -8,7 +8,9 @@
 
 python3.pkgs.buildPythonPackage rec {
   pname = "madmom";
-  version = "0.16.1.dev0";
+  # What the pinned commit's setup.py declares; the metadata check insists the
+  # two agree.
+  version = "0.17.dev0";
   pyproject = true;
 
   src = fetchFromGitHub {

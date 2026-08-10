@@ -57,6 +57,10 @@ python3.pkgs.buildPythonPackage {
     ];
   };
 
+  # The pinned commit is a snapshot past the 0.1.80 release, but setup.py still
+  # says 0.1.80, so the metadata check trips over the -dev suffix.
+  dontCheckPythonMetadata = true;
+
   pythonImportsCheck = [ "msaf" ];
 
   meta = with lib; {
