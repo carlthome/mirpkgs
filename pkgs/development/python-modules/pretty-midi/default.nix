@@ -20,6 +20,9 @@ python3.pkgs.buildPythonPackage rec {
     six
     numpy
     mido
+    # instrument.py resolves its data files through pkg_resources, which
+    # setuptools no longer ships.
+    standard-pkg-resources
   ];
 
   pythonImportsCheck = [ "pretty_midi" ];

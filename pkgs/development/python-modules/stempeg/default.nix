@@ -25,6 +25,9 @@ python3.pkgs.buildPythonPackage rec {
     ffmpeg-python
     ffmpeg
     numpy
+    # stempeg/__init__.py reads its version through pkg_resources, which
+    # setuptools no longer ships.
+    standard-pkg-resources
   ];
 
   passthru.optional-dependencies = with python3.pkgs; {
