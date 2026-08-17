@@ -27,7 +27,7 @@ python3.pkgs.buildPythonPackage rec {
     mir-eval
   ];
 
-  checkInputs = with python3.pkgs; [
+  nativeCheckInputs = with python3.pkgs; [
     pytest-cov
   ];
 
