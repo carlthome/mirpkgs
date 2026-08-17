@@ -11,7 +11,7 @@
 python3.pkgs.buildPythonPackage rec {
   pname = "mirdata";
   version = "1.0.0";
-  format = "setuptools";
+  pyproject = true;
 
   # The tests require data files that are not included in the source release, so we take the source from GitHub instead.
   src = fetchFromGitHub {
@@ -20,6 +20,10 @@ python3.pkgs.buildPythonPackage rec {
     rev = version;
     hash = "sha256-yF4mh2StTr5kLUu3wI3SZF9ASLhhHAP/+WM7x1xNnI8=";
   };
+
+  build-system = with python3.pkgs; [
+    setuptools
+  ];
 
   dependencies = with python3.pkgs; [
     attrs
@@ -90,7 +94,7 @@ python3.pkgs.buildPythonPackage rec {
     ];
   };
 
-  checkInputs = lib.flatten (builtins.attrValues passthru.optional-dependencies);
+  nativeCheckInputs = lib.flatten (builtins.attrValues passthru.optional-dependencies);
 
   checkPhase = ''
     runHook preCheck
